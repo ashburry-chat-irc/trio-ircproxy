@@ -2,6 +2,7 @@
 {% block title %}Create the Admin account, remember your password{% endblock title %}
 {% block content %}
 <h1>PleaSe CompLete the AdmiN AccoUnt SetuP</h1>
+<p>{{ user.type }}</p>
 <form action="/admin-create/" method="POST">
   <h3 align="center">You Must Create the Administrator Account Here</h3>
   <div class="form-group">

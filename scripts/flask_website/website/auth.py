@@ -23,8 +23,8 @@ def no_cache(resp):
 @auth.route('/admin-create/', methods=['GET', 'POST', 'HEAD'])
 def admin_create():
     if hasattr(current_user, 'user_name'):
-        if not current_user.type == 'admin-not-ready':
-            redirect(url_for('views.bounce'))
+        if current_user.type != 'admin-not-ready':
+           return redirect(url_for('views.bounce'))
     else:
         return redirect(url_for('auth.not_admin'))
     if request.method == 'POST':
