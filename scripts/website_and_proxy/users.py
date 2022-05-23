@@ -4,14 +4,10 @@ from hashlib import sha256
 from typing import List
 from os.path import realpath, exists
 from pathlib import Path
-import os
-import sys
 from socket_data import SocketData as socket_data
-import os
-from cwd_flask import w3_proxy_root_path
-user_file_str: str = os.path.join(w3_proxy_root_path, 'users.dat')
-user_file = Path(user_file_str)
-
+from os import path
+_dir = path.dirname(path.abspath(__file__))
+user_file: Path = Path(path.join(_dir, "users.dat"))
 
 def status_msg(client_socket: trio.SocketStream | trio.SSLStream, msg: str):
     from scripts.trio_ircproxy.socket_data import SocketData

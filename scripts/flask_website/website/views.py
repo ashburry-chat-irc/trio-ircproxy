@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from __future__ import annotations
 
 from flask import render_template, make_response, request, url_for, redirect
@@ -5,7 +7,7 @@ from flask import Blueprint, flash, jsonify
 from flask_login import login_required, current_user
 import sys
 
-from __init__ import APP_DIR, STATIC_DIR
+from website import APP_DIR, STATIC_DIR
 from user_db import Note
 from user_db import db
 import json

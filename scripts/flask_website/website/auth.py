@@ -6,13 +6,9 @@ from flask_login import login_user, login_required, logout_user, current_user
 from flask_sqlalchemy import BaseQuery
 from time import time
 
-from json_data import json_data
-
 import json
 
-import sys
-
-from __init__ import APP_DIR
+from website import APP_DIR
 from user_db import User
 from user_db import db
 from json_data import json_data
@@ -51,7 +47,7 @@ def admin_create():
             db.session.commit()
             login_user(admin, remember=True)
             flash('administrator account is created! pls remember your password.', category='success')
-            return redirect(url_for('views.bounce'))
+            return redirect(url_for('auth.admin_settings'))
     resp = make_response(render_template("admin.html", user=current_user), 200)
     no_cache(resp)
     return resp
@@ -75,510 +71,67 @@ def settings():
     else:
         return redirect(url_for('auth.login'))
 
-@auth.route('/admin/post/home-data.html', methods=['POST'])
-def home_data(xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=None
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-              ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc                                                                                 xxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ):
+@auth.route('/admin/post/home-data.py', methods=['POST'])
+def home_data():
     if request.method != 'POST':
-        return redirect(url_for('/admin/admin-settings.html'))
+        flash('this is not an web-page with content. url is only for POSTing only!', category='error')
+        return redirect(url_for('views.home'))
     if hasattr(current_user, 'user_name') and current_user.user_name != 'admin':
         flash('you MUST log-in as the Admin to post to this URL.')
         return redirect(url_for('auth.login'))
-    home_err: bool = False
+
     if not request.form.get('server_name'):
-        home_err = True
         flash('invalid Server Name.', category='error')
+        return redirect(url_for('auth.admin_settings'))
     for c in request.form.get('server_name'):
         c = c.lower()
         if ord(c) in range(48, 58) and ord(c) not in range(97, 123) and ord(c) != 95 and ord(c) != 46:
-            home_err = True
             flash('Server Name contains invalid symbols.', category='error')
-    if not home_err:
-        json_data.home['home']['server_name'] = request.form.get('server_name')
-    home_err: bool = False
+            return redirect(url_for('auth.admin_settings'))
+    json_data.home['home']['server_name'] = request.form.get('server_name')
+
     if not request.form.get('admin_name'):
-        home_err = True
         flash('missing Admin NickName.', category='error')
+        return redirect(url_for('auth.admin_settings'))
     for c in request.form.get('admin_name'):
         c = c.lower()
-        if ord(c) in range(48, 58) and ord(c) not in range(97, 123) and ord(c) != 95 and ord(c) != 46:
-            home_err = True
+        if ord(c) in range(48, 58) and ord(c) not in range(97, 123) and ord(c) != 95 and ord(c) != 46 and ord(c) != 45:
             flash('Admin Name contains invalid symbols.', category='error')
-    if not home_err:
-        json_data.home['home']['admin'] = request.form.get('admin_name')
-    home_err: bool = False
-    if not request.form.get('email'):
-        home_err = True
-        flash("missing Admin Email Address.", category='error')
-    if '@' not in request.form.get('email'):
-        home_err = True
-        flash('invalid Admin Email Address.', category='error')
-    from fnmatch import fnmatch
+            return redirect(url_for('auth.admin_settings'))
 
-    if not fnmatch(request.form.get('email'), '?*@?*'):
-        home_err = True
+    json_data.home['home']['admin'] = request.form.get('admin_name')
+
+    from fnmatch import fnmatch
+    if not request.form.get('email'):
+        flash("missing Admin Email Address.", category='error')
+        return redirect(url_for('auth.admin_settings'))
+    elif '@' not in request.form.get('email'):
         flash('invalid Admin Email Address.', category='error')
-    if not home_err:
+        return redirect(url_for('auth.admin_settings'))
+    elif not fnmatch(request.form.get('email'), '?*@?*'):
+        flash('invalid Admin Email Address.', category='error')
+        return redirect(url_for('auth.admin_settings'))
+    else:
         json_data.home['home']['email'] = request.form.get('email').lower()
 
-    home_err: bool = False
+
+    if not request.form.get('smtp_server'):
+        json_data.home['home']['smtp_server'] = 'smtp.' + request.form.get('email').split('@')[2]
+    else:
+        json_data.home['home']['smtp_server'] = request.form.get('smtp_server')
+
     if not request.form.get('smtp_password1'):
-        home_err = True
-
-    if not home_err:
-        json_data.home
-         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx['home']['smtp_password1'] = request.form.get('smtp_password1')
-
-    home_err: bool = False
-    if not request.form.get('smtp_password2'):
-        home_err = True
-
-    if request.form.get('smtp_password2') != request.form.get('smtp_password1'):
-        home_err = True
-        flash("the Passwords you entered do not match, retype; then resend the form again.", category='error')
-    if not home_err:
-        json_data['home']['smtp_password2'] = request.form.get('smtp_password2')
-    return redirect(url_for('auth.admin_settings'))
+        flash("you must enter an Password and Confim Password.", category='error')
+        return redirect(url_for('auth.admin_settings'))
+    elif not request.form.get('smtp_password2'):
+            flash("you must enter an Confim Password.", category='error')
+            return redirect(url_for('auth.admin_settings'))
+    else:
+        if request.form.get('smtp_password2') != request.form.get('smtp_password1'):
+            flash("the Passwords you entered do not match.", category='error')
+        else:
+            json_data.home['home']['smtp_password'] = request.form.get('smtp_password2')
+        return redirect(url_for('auth.admin_settings'))
 
 @auth.route('/admin-settings/', methods=['GET', 'POST', 'HEAD'])
 @auth.route('/admin/admin-settings.htm', methods=['GET', 'POST', 'HEAD'])
@@ -730,15 +283,19 @@ def admin():
         admin_exists = User.query.filter_by(user_name='admin').first()
         if admin_exists:
             return redirect(url_for('auth.not_admin'))
+        else:
+            return login_new_admin(request.environ['REMOTE_ADDR'])
     except:
-        ip = request.environ['REMOTE_ADDR']
-        new_user = User(email='noadmin@yoursite.com', type="admin-not-ready", user_name='admin', ip=ip,
-                        password=generate_password_hash('no-password', method='sha256'))
-        db.session.add(new_user)
-        db.session.commit()
-        login_user(new_user, remember=True)
-        flash('admin account created. change the password right now!', category='success')
-        return redirect(url_for('auth.admin_create'))
+        return login_new_admin(request.environ['REMOTE_ADDR'])
+
+def login_new_admin(ip):
+    new_user = User(email='noadmin@yoursite.com', type="admin-not-ready", user_name='admin', ip=ip,
+                    password=generate_password_hash('no-password', method='sha256'))
+    db.session.add(new_user)
+    db.session.commit()
+    login_user(new_user, remember=True)
+    flash('admin account created. change the password right now!', category='success')
+    return redirect(url_for('auth.admin_create'))
 
 
 @auth.route('/login.html', methods=['GET', 'POST', 'HEAD'])

@@ -10,11 +10,11 @@ from cryptography.fernet import Fernet, InvalidToken
 from os import path
 from users import user_file
 
-home_root = path.dirname(path.abspath(__file__))
-app_root: Path = Path('.') / 'app'
+w3proxy_dir = path.dirname(path.abspath(__file__))
+app_root: Path = Path(w3proxy_dir) / ".." / "flask_website" / 'app'
 
-home_file: Path = Path(home_root) / 'home.json'
-key_file: Path = Path(home_root) / 'safe.dat'
+home_file: Path = Path(w3proxy_dir) / 'home.json'
+key_file: Path = Path(w3proxy_dir) / 'safe.dat'
 flood_file: Path = app_root / 'flood.json'
 bnc_file: Path = app_root / 'bnc.json'
 net_file: Path = app_root / 'network.json'
