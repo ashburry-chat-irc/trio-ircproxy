@@ -1,0 +1,9 @@
+pyopenssl
+gevent
+pendulum
+trio
+trio-typing
+platformdirs
+typing
+pif
+

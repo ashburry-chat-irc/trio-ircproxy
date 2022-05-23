@@ -1,0 +1,197 @@
+on *:privmsg:*:*status: {
+  tokenize 32 $strip($1-)
+  if ($1- == Trio-ircproxy.py active for this connection) { set $varname_cid(trio-ircproxy.py, active) $true }
+  if ($1- == you are logged-in as Administrator) { set $varname_cid(trio-ircproxy.py, admin) $true }
+  if ($4 != $null) && ($1-4 iswm *your username is ??*) { set $varname_cid(trio-ircproxy.py, is_user) $4 }
+}
+on *:quit: {
+  if ($nick == $me) { 
+    unset $varname_cid(trio-ircproxy.py, active)
+    unset $varname_cid(trio-ircproxy.py, admin)     
+  }
+}
+alias advertise-chan {
+  if ($status != connected) { return }
+  if ($chan != $null) { return this channel }
+}
+alias advertise-in-channel {
+  if ($status != connected) { return }
+  if ($chan(0) > 0) { return in channel }
+}
+alias advertise-chan-00 {
+  if ($status != connected) { return }
+  if ($chan(1) != $null) { return $chan(1) }
+}
+alias advertise-chan-00 {
+  if ($status != connected) { return }
+  if ($chan(1) != $null) { return $chan(1) }
+}
+alias advertise-chan-01 {
+  if ($status != connected) { return }
+  if ($chan(2) != $null) { return $chan(2) }
+}
+alias advertise-chan-02 {
+  if ($status != connected) { return }
+  if ($chan(3) != $null) { return $chan(3) }
+}
+alias advertise-chan-03 {
+  if ($status != connected) { return }
+  if ($chan(4) != $null) { return $chan(4) }
+}
+alias advertise-chan-04 {
+  if ($status != connected) { return }
+  if ($chan(5) != $null) { return $chan(5) }
+}
+alias advertise-chan-05 {
+  if ($status != connected) { return }
+  if ($chan(6) != $null) { return $chan(6) }
+}
+alias advertise-chan-06 {
+  if ($status != connected) { return }
+  if ($chan(7) != $null) { return $chan(7) }
+}
+alias advertise-chan-07 {
+  if ($status != connected) { return }
+  if ($chan(8) != $null) { return $chan(8) }
+}
+alias advertise-chan-08 {
+  if ($status != connected) { return }
+  if ($chan(9) != $null) { return $chan(9) }
+}
+alias advertise-chan-09 {
+  if ($status != connected) { return }
+  if ($chan(10) != $null) { return $chan(10) }
+}
+alias advertise-this-connection {
+  if ($status != connected) { return }
+  if ($chan(0) == 0) { return }
+  return all chans on this connection
+}
+alias advertise-network {
+  if ($network == $null) { return }
+  return chans on network $network
+}
+alias advertise-this-client {
+  return everywhere on this client
+}
+alias advertise-everywhere {
+  return all proxy user named [ [ $varname_cid(trio-ircproxy.py, is_user) ] ]
+}
+menu Status,Channel {
+  $chr(46) $chr(58) M&achine Gun $str($chr(58),2) $chr(58)
+  .$chr(46) $str($chr(58),1) describe mg $str($chr(58),2) $chr(58)
+  ..$advertise-chan : /describe $chan is using mSL Machine Gun script named Bauderr. send ctcp script/version for more info.
+  ..$advertise-in-channel
+  ...$advertise-chan-00 : /bauderr-advertise --chan $chan(1)
+  ...$advertise-chan-01 : /bauderr-advertise --chan $chan(2)
+  ...$advertise-chan-02 : /bauderr-advertise --chan $chan(3)
+  ...$advertise-chan-03 : /bauderr-advertise --chan $chan(4)
+  ...$advertise-chan-04 : /bauderr-advertise --chan $chan(5)
+  ...$advertise-chan-05 : /bauderr-advertise --chan $chan(6)
+  ...$advertise-chan-06 : /bauderr-advertise --chan $chan(7)
+  ...$advertise-chan-07 : /bauderr-advertise --chan $chan(8)
+  ...$advertise-chan-08 : /bauderr-advertise --chan $chan(9)
+  ...$advertise-chan-09 : /bauderr-advertise --chan $chan(10)
+  ..$advertise-this-connection : /proxy-advertise --connection
+  ..$advertise-network : /proxy-advertise --network $network
+  ..$advertise-this-client : /scon -a /ame is using Machine Gun script named Bauderr with trio-ircproxy.py walker byte-code!
+  ..everywhere possible : /proxy-advertise -everywhere
+  -
+  &flood protection
+  .p&ersonal : /proxy-noflood-personal on
+  .&channel : /proxy-noflood-channel on
+  .-
+  .info : script_info -flood
+  mirc &commands
+  .interface
+  ..$iif(($switchbar),$style(1)) show swichbar : switchbar $iif(($switchbar),off,on)
+  ..$iif(($treebar),$style(1)) [show treebar] : treebar $iif(($treebar),off,on)
+  ..$iif(($menubar),$style(1)) [show menubar] : menubar $iif(($menubar),off,on)
+  channel &assistance
+  .topi&c history
+  ..&clear all history : unset $varname_global(topic_history_*,*)
+  ..$iif((!$chan),$style(2)) &clear channel history : unset $varname_global(topic_history_ $+ $chan,*)
+  ..-
+  ..$submenu($topic_history_popup($1))
+
+  &trio-ircproxy.py
+  .$iif((!$varname_cid(trio-ircproxy.py,active).value),$style(2)) &server identity
+  ..&set servers name : /proxy-set-name $$?="enter your server's name (only letters and period):"
+  ..&set admin nickname : /proxy-set-admin $$?="enter your contact nickname:"
+  ..&set admin email : /proxy-set-email $$?="enter your admin email:"
+  ..-
+  ..in&fo : /script_info -identity
+  .-
+  .$iif((!$varname_cid(trio-ircproxy.py,active).value),$style(2)) &shutdown trio-ircproxy : /proxy-shutdown
+  .$iif(($varname_cid(trio-ircproxy.py,active).value),$style(2)) &start trio-ircproxy.py 
+  ..p&y -3 : /run -n py -3 $qw($scriptdir..\..\trio-ircproxy.py)
+  ..py&thon : /run -n python $qw($scriptdir..\..\trio-ircproxy.py)
+  ..[py&thon3] : /run -n python3 $qw($scriptdir..\..\trio-ircproxy.py)
+  ..-
+  ..&custom
+  ...$iif(($right($nofile($varname_global(python3,file_path).value),12) $+ $nopath($varname_global(python3,file_path).value) == $null), nothing,$ifmatch) : run -n $qw($varname_global(python3,file_path).value) $qw($scriptdir..\..\trio-ircproxy.py)
+  ...-
+  ...&change file path : var %tmp = $sfile($envvar(userprofile) $+ \AppData\Local\Programs\Python\Python*.exe,Select your Python v3.8+ interpreter,Select) | if (!$sfstate) { set $varname_global(python3,file_path) %tmp }
+  .-
+  .$iif((!$varname_cid(trio-ircproxy.py,active).value),$style(2)) &register ip
+  ..$iif(($varname_global(trio-ircproxy-register,public).value == $true),$style(1)) publi&c ip : /proxy-register public $$?="enter the port number you wish to use:"
+  ..$iif(($varname_global(trio-ircproxy-register,private).value == $true),$style(1)) p&rivate ip : /proxy-register private $$?="enter the port number you wish to use:"
+  ..-
+  ..in&fo : script_info -register
+  .$iif((!$varname_cid(trio-ircproxy.py,active).value),$style(2)) &add ip address : /proxy-add-ip $$?="enter IP address to add:" 
+  .$iif((!$varname_cid(trio-ircproxy.py,active).value),$style(2)) &stop ip adress
+  ..192.168.0.17 : /proxy-stop 192.168.0.17
+  .$iif((!$varname_cid(trio-ircproxy.py,active).value),$style(2)) &change port
+  ..192.168.0.17 [4321] : /proxy-change-port 192.168.0.17 $$?="enter an Port number:"
+  .-
+  .$iif((!$varname_cid(trio-ircproxy.py,active).value),$style(2)) net&work the proxy server
+  ..mer&ge your server with someone else : /proxy-network $$?="enter url with port:" $$?="enter username and password for server merge:"
+  ..-
+  ..&get merge login, they merge with you : /query *status get-merge-login | /window -a *status
+  ..&change merge login : /query *status change-merge-login | /window -a *status
+  ..-
+  ..&remove from network
+  ...remove &all : /proxy-network-remove all
+  ..-
+  ..&show links : /proxy-show-links
+  ..-
+  ..in&fo : /script_info -links
+  .-
+  .$iif((!$varname_cid(trio-ircproxy.py,active).value),$style(2)) running status : /proxy-status
+  &connect irc
+  .with proxy 
+  ..192.168.0.17 4321 : /proxy on | var %net = $iif(($network),$network,$$?="enter network name:") | /server $$server(1, %net) $+ : $+ $remove($server(1, %net).port,+) 
+  .with vhost
+  ..38.242.206.227 7000 : /proxy off | var %net = $iif(($network),$network,$$?="enter network name:") | /server 38.242.206.227:7000 $$?="enter your username:" $+ / $+ %net $+ : $+ $$?="enter your password:"
+  ..192.168.0.17 +6697 : /proxy off | var %net = $iif(($network),$network,$$?="enter network name:") | /server 192.168.0.17:+6697 $$?="enter your username:" $+ / $+ %net $+ : $+ $$?="enter your password:"
+
+  ; command history
+  ;.xcdcc send #899 : /msg [MG]-MISC|EU|S|RandomPunk xdcc send #899
+
+}
+menu menubar {
+  $iif((!$var(%bde_glob_*history*,0)),$style(2)) erase history : unset %bde_glob_*history* | eecho you have erased your history.
+  $iif(($os isin 7,10,11),&set client faster) : eecho changed priority of all running $nopath($mircexe) and python.exe apps to 'High' | run -hn wmic process where name=" $+ $nopath($mircexe) $+ " CALL setpriority 128 | run -hn wmic process where name="python.exe" CALL setpriority 128
+
+}
+on *:input:*?> $chan(35) $+ ?*: {
+  tokenize 32 $strip($1-)
+  if ($0 < 2) { return }
+  var %num = $remove($2,$chr(35))
+  if (!$isnum(%num)) { return }
+  var %name = $remove($1,<,>,+,@,%,&,!)
+  if (!%name) { return }
+  msg %name xdcc send $chr(35) $+ %num
+  halt
+}
+menu @script_info {
+  close window : window -c $active
+  -
+  flood : /script_info -flood
+  cmd history : script_info -cmd_history
+  trio-ircproxy.py
+  .identity : script_info -identity
+  .register ip : script_info -register
+  .merge links : script_info -links
+
+}

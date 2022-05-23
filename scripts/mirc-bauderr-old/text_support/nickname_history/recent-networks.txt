@@ -1,0 +1,7 @@
+Libera.Chat
+Rizon
+Abjects
+UnderNet
+freenode
+DALnet
+SwiftIRC

@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "trio-ircproxy"
+version = "0.3.13"
+description = "Proxy server for your irc client."
+authors = ["Ashburry <Ashburry_UnderNet@outlook.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+trio = "^0.20.0"
+pif = "^0.8.2"
+circular = "^0.1"
+cryptography = "^37.0.0"
+platformdirs = "^2.5.2"
+pendulum = "^2.1.2"
+Werkzeug = "^2.1.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

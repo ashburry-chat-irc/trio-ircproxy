@@ -1,0 +1,84 @@
+@font-face{
+    font-family:'LittlemomentRegular-OVneP';
+    src:url('../fonts/LittlemomentRegular-OVneP.otf') format('opentype');
+    font-weight:normal;
+    font-style:normal
+}
+@font-face{
+    font-family:'Exo-ExtraLight';
+    src:url('../fonts/Exo-ExtraLight.otf') format('opentype');
+    font-weight:normal;
+    font-style:normal
+}
+
+
+
+body {
+    background-color: black;
+    background-image: url("/static/images/background05.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: left center;
+    font-family: "Exo-ExtraLight", serif;
+    color: #fffdd0;
+}
+p, pre {
+    font-family: "Exo-ExtraLight", serif;
+    color: #fffdd0;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: LittlemomentRegular-OVneP, serif;
+
+}
+.yellow, #yellow {
+    color: #fcffa4;
+}
+nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+main, footer {
+    padding-top: 0;
+    margin-top: 0;
+    margin-right: auto;
+    margin-left: auto;
+}
+main {
+  margin-top: 10px;
+}
+.Site {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Avoid the IE 10-11 `min-height` bug. */
+}
+footer {
+  background-color: black;
+  flex-shrink: 0; /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
+  text-align: center;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+}
+.Site-content {
+ flex: 1 0 auto; /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
+ width: 920px;
+}
+footer p {
+  text-align: center;
+}
+
+
+a:hover {
+    color: yellow;
+}
+a:visted {
+    color: teal;
+}
+a:active {
+    color: hotpink;
+}
+a {
+    color: teal;
+}
+
