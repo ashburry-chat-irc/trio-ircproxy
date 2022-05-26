@@ -3,7 +3,7 @@
 from fnmatch import fnmatch
 from . import circular
 from pendulum import duration
-from .socket_data import SocketData as socket_data
+from ..website_and_proxy.socket_data import SocketData as socket_data
 from time import time
 from ..website_and_proxy.users import verify_user_pwdfile, add_new_user
 

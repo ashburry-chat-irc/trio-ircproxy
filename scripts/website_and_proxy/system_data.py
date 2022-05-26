@@ -18,10 +18,9 @@ import os
 import json
 from os import makedirs
 import sys
+_dir = os.path.dirname(os.path.abspath(__file__))
 
-
-user_file = Path('/home/xdcc/website_and_proxy/users.dat')
-
+user_file = Path(os.path.join(_dir, "users.dat"))
 sysdir_path = os.path.join(appdirs.user_config_path(), "trio_ircproxy-5ioE.3")
 xdccdir_path = os.path.join(appdirs.user_config_path(), "trio_ircproxy-5ioE.3", "xdcc_search")
 
@@ -34,6 +33,8 @@ class SystemData:
         mkdir(sysdir_path)
     if not isdir(xdccdir_path):
         mkdir(xdccdir_path)
+    sysdir_path = os.path.join(appdirs.user_config_path(), "trio_ircproxy-5ioE.3")
+    xdccdir_path = os.path.join(appdirs.user_config_path(), "trio_ircproxy-5ioE.3", "xdcc_search")
     authfile_path: str = os.path.join(sysdir_path, "auth.json")
     fryserverfile_path: str = os.path.join(sysdir_path, "fryserver.json")
     settingsfile_path: str = os.path.join(sysdir_path, "settings.json")

@@ -17,21 +17,15 @@ w3proxy_dir = path.join(_dir, "..", "website_and_proxy")
 sys.path.insert(0, w3_dir)
 sys.path.insert(0, w3proxy_dir)
 
-from twisted.internet import reactor
-#from twisted.internet.error import *
-from twisted.internet.error import CannotListenError
 
-from twisted.web.server import Site
-from twisted.web.wsgi import WSGIResource
-from flask import make_response, render_template, redirect, url_for, Blueprint
-from flask_login import current_user
-from urllib.parse import urlparse
-from os.path import exists
+from flask import Flask
 from flask_login import LoginManager
 from os.path import exists
 from user_db import User
-from user_db import db, app_new
+from user_db import db
 from os import path
+
+app_new = Flask(__name__)
 
 DB_NAME = "database.db"
 
@@ -78,6 +72,11 @@ def create_database(app):
 
 def begin_flask():
     try:
+        from twisted.internet import reactor
+        from twisted.web.server import Site
+        from twisted.web.wsgi import WSGIResource
+        from twisted.internet.error import CannotListenError
+
         i_port: int = int(website_port) or 80
         n_host: str = str(website_named_host) or '127.0.0.1'
         # Uncomment the 3 lines below and comment out the app.run() for Windows

@@ -1,4 +1,4 @@
-alias -l msg echo >> msg >> $1-
+alias msg echo >> msg >> $1-
 
 on *:topic:#: {
   var %topic = $strip($1-)

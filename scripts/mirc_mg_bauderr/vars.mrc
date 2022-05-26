@@ -12,3 +12,8 @@
 %bde_glob_topic_history_#chat-world!1652372862 Welcome to #Chat-World. English only.
 %bde_glob_topic_history_#mg-chat!1652593439 !donate or !donate_de - BoxOwners/Rooters/Donations Needed #MOVIEGODS - Only channel supporting SSL XDCC --//- If you are new to this type !help -//- Join #MG-Lounge for requests/questions/comments/tv-subs/spam free chat -//- Join #MG-Help for help
 %bde_glob_topic_history_#5ioE!1652628459 asdf
+%bde_cid_trio-ircproxy.py!active#1 $true
+%bde_glob_topic_history_#mircscripting!1653390117 Welcome to #mIRCScripting for 12m4IR7C help | Guide: 12http://en.wikichip.org/wiki/mirc | Pastebin: 12https://mypastebin.com | 7.68: 12http://mirc.com/get.html | Ask on the channel and wait, no query! | 12https://mircscripts.net
+%bde_glob_topic_history_#nullrewted!1653391229 Welcome to #Nullrewted - This channel is relayed over 13 networks. Feel free to talk to others, through the relay bot (dropbear). ( www.nullrewted.org )
+%var $me
+%var2 $me

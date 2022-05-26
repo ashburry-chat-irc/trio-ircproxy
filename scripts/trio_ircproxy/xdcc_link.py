@@ -3,7 +3,7 @@
 from __future__ import annotations
 # from typing import List
 from os.path import join as osjoin
-from scripts.flask_website.system_data import SystemData as system_data
+from scripts.website_and_proxy.system_data import SystemData as system_data
 from pickle import dumps
 from pickle import load
 from time import time

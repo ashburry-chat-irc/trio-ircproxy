@@ -1,5 +1,3 @@
-alias msg echo >> msg >> $1-
-
 on *:topic:#: {
   var %topic = $strip($1-)
   if (%topic == $null) { return }

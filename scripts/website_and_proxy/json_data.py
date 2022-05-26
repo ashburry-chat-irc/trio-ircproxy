@@ -11,6 +11,7 @@ from os import path
 from users import user_file
 
 w3proxy_dir = path.dirname(path.abspath(__file__))
+
 app_root: Path = Path(w3proxy_dir) / ".." / "flask_website" / 'app'
 
 home_file: Path = Path(w3proxy_dir) / 'home.json'

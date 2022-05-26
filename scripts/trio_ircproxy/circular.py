@@ -4,7 +4,6 @@ from __future__ import annotations
 from typing import Optional, Union
 from pathlib import Path
 import trio
-# import system_data to prevent circular imports
 import os
 user_file_str: str = os.path.join('.', 'scripts', 'website_and_proxy', 'users.dat')
 user_file = Path(user_file_str)
@@ -24,7 +23,6 @@ def sc_send(sc_socket: trio.SocketStream | trio.SSLStream, msg: Union[str, bytes
     except KeyError:
         return
     send_buffer.append(msg)
-
 
 
 async def send_quit(sc_socket):

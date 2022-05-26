@@ -1,3 +1,5 @@
+twisted
+cryptography
 pif
 trio
 platformdirs

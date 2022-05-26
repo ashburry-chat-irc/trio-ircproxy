@@ -3,10 +3,10 @@
 from __future__ import annotations
 from typing import Dict, List
 import trio
-from scripts.flask_website.system_data import SystemData as system_data
+from scripts.website_and_proxy.system_data import SystemData as system_data
 from .xdcc_link import XdccBotSLL
 from .xdcc_link import XdccBot
-from .socket_data import SocketData as socket_data
+from scripts.website_and_proxy.socket_data import SocketData as socket_data
 from . import circular
 
 

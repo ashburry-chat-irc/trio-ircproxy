@@ -41,14 +41,13 @@ from sys import argv
 # from sys import exc_info
 from socket import gaierror
 from pif import get_public_ip
-from scripts.trio_ircproxy.socket_data import SocketData as socket_data
-from scripts.flask_website.system_data import SystemData as system_data
-from scripts.trio_ircproxy import xdcc_system, circular
+from scripts.website_and_proxy.socket_data import SocketData as socket_data
+from scripts.website_and_proxy.system_data import SystemData as system_data
+from scripts.trio_ircproxy import xdcc_system
+from scripts.trio_ircproxy import circular
 from scripts.trio_ircproxy import ial
-from scripts.flask_website.flask_app import begin_flask
 from scripts.website_and_proxy.users import validate_login, verify_user_pwdfile
 import trio
-import multiprocessing as mp
 from scripts.website_and_proxy.socket_data import aclose_sockets
 
 chdir(realpath(dirname(expanduser(argv[0]))))
@@ -1352,19 +1351,4 @@ def begin_server() -> None:
 
 
 if __name__ == "__main__":
-    mp.set_start_method('spawn')
-    remote_website: str | bool = json_data.home['home'].get('remote_website', False)
-    local_website: str | bool = json_data.home['home'].get('local_website', False)
-    if not remote_website[0] and not local_website[0]:
-        json_data.home['home']['local_website'] = ["http://127.0.0.1:80"]
-    #p1: mp.Process = mp.Process(target=begin_server)
-    p2: mp.Process = mp.Process(target=begin_flask)
-    if not remote_website[0]:
-        p2.start()
-        begin_server()
-        try:
-            p2.join()
-        except KeyboardInterrupt:
-            pass
-    else:
-        begin_server()
+    begin_server()

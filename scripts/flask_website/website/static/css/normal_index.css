@@ -11,8 +11,6 @@
     font-style:normal
 }
 
-
-
 body {
     background-color: black;
     background-image: url("/static/images/background05.jpg");
@@ -28,6 +26,7 @@ p, pre {
 }
 h1, h2, h3, h4, h5, h6 {
     font-family: "LittlemomentRegular-OVneP", serif;
+    color: #FFFF33;
 
 }
 .yellow, #yellow {
@@ -70,15 +69,15 @@ footer p {
 
 
 a:hover {
-    color: yellow;
+    color: #FFCC33;
 }
 a:visted {
-    color: teal;
+    color: #FFFF33;
 }
 a:active {
-    color: hotpink;
+    color: #FFCC33;
 }
 a {
-    color: teal;
+    color: #FFFF33;
 }
 
