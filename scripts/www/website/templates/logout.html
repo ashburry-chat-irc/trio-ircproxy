@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Already logged-out session{% endblock title %}
+{% block content %}
+<header><h1>AlreAdy LogGed-Out</h1></header>
+<p>
+    You are not logged in as an authenticated user. Please <a href="/admin/login.htm">log-in</a>
+    or <a href="/admin/signup.htm">sign-up</a>. If you forgot your password try the
+    <a href="/admin/password-reset.htm">password reset page</a>.
+</p>
+{% endblock content %}
