@@ -138,7 +138,12 @@ menu Status,Channel {
   ..-
   ..info : script_info -history
   .-
-  .$iif((!$chan),$style(2),$iif((!$bnc_active),$iif((!$varname_glob(say-away,none).value),$null,$style(1)),$style(2))) announce away in channels : bnc_msg say-away-toggle
+  .$iif((!$bnc_active),$iif((!$varname_cid(update-ial-entry).value),$style(2)),$style(1)),$style(2)) update /who on entry
+  .$iif((!$bnc_active),$iif((!$varname_cid(update-chan-lists).value),$style(2)),$style(1)),$style(2)) update ban/exception/invite lists
+  .-
+  .$iif((!$chan),$style(2),$iif((!$  .$iif((!$bnc_active),$iif((!$varname_cid(update-chan-lists).value),$style(2)),$style(1)),$style(2)) update ban/exception/invite lists_active),$iif((!$varname_glob(say-away,none).value),$null,$style(1)),$style(2))) announce away in channels : bnc_msg say-away-toggle
+
+
   .-
   .$bnc_active ircoper scan
   ..scan now here : bnc_msg operscan$chan

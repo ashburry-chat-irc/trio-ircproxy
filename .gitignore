@@ -1,3 +1,6 @@
+#backups
+*.bak
+*.backup
 # enormous .git directory
 .git\
 

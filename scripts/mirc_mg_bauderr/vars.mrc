@@ -17,3 +17,9 @@
 %bde_glob_topic_history_#nullrewted!1653391229 Welcome to #Nullrewted - This channel is relayed over 13 networks. Feel free to talk to others, through the relay bot (dropbear). ( www.nullrewted.org )
 %var $me
 %var2 $me
+%bde_glob_topic_history_#5ioE!1653987195 66,88The offical 5ioE (side) Gang channel. Help and Support inside.
+%bde_glob_topic_history_#5ioE!1653987204 66,88The offical 5ioE (side) Gang channel. Help and Support inside.
+%bde_glob_topic_history_#5ioE!1653987244 66,88The offical 5ioE (side) Gang channel. Help and Support insideE https://ashburry.pythonanywhere.com
+%bde_glob_topic_history_#5ioE!1653987264 66,88The offical 5ioE (side) Gang channel. Help and Support insidee https://ashburry.pythonanywhere.com
+%bde_glob_topic_history_#5ioE!1653987334 66,88The 5ioE (side) Gang offical channel. Project Help and Support insidee https://ashburry.pythonanywhere.com
+%bde_glob_topic_history_#XInvite!1654029248 dfdgjhkhjkl;l'';

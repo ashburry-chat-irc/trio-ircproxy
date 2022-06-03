@@ -13,16 +13,14 @@ from website import w3_prefix, website_named_host, website_port
 from flask import Flask
 from flask_login import LoginManager
 from os.path import exists
-from user_db import User
-from user_db import db
 from os import path
-
-
 _dir = path.dirname(path.abspath(__file__))
 w3_dir = path.join(_dir, "website", "templates")
 w3proxy_dir = path.join(_dir, "..", "website_and_proxy")
 sys.path.insert(0, w3_dir)
 sys.path.insert(0, w3proxy_dir)
+from user_db import User
+from user_db import db
 
 app_new = Flask(__name__)
 

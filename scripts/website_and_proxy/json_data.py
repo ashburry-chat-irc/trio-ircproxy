@@ -12,7 +12,7 @@ from users import user_file
 
 w3proxy_dir = path.dirname(path.abspath(__file__))
 
-app_root: Path = Path(w3proxy_dir) / ".." / "flask_website" / 'app'
+app_root: Path = Path(w3proxy_dir) / ".." / "www" / 'app'
 
 home_file: Path = Path(w3proxy_dir) / 'home.json'
 key_file: Path = Path(w3proxy_dir) / 'safe.dat'

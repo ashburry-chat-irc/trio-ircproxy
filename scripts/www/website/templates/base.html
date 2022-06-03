@@ -64,7 +64,9 @@
     </div>
     {% endif %} {% endfor %} {% endif %} {% endwith %}
 
-    <main class="Site-content container">{% block content %} {% endblock content %}
+    <main class="Site-content container">
+      <h1>{% block h1 %} {% endblock h1 %}</h1>
+      {% block content %} {% endblock content %}
     <br /><br />
     </main>
       <footer class="Site-footer"><small><p>Copyright &copy; 2022, sire <strong>Kenggi P.</strong>
