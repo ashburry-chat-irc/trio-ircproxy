@@ -101,6 +101,7 @@ def coc():
     no_cache(resp)
     return resp
 
+
 @views.route('/xdcc-search.html', methods=['GET', 'HEAD'])
 @views.route('/xdcc-search.py', methods=['GET', 'HEAD'])
 @views.route('/xdcc-search/', methods=['GET', 'HEAD'])
