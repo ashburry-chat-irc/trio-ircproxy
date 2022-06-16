@@ -1,5 +1,4 @@
-try:
-    from circular import db
+from circular import db
 from sqlalchemy.sql import func
 
 
