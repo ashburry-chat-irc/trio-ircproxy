@@ -95,62 +95,6 @@ menu Status,Channel {
   ..$advertise-this-client : /scon -a /ame is using Machine Gun script named Bauderr with trio-ircproxy.py walker byte-code!
   ..everywhere possible : /proxy-advertise -everywhere
   -
-  &flood protection
-  .p&ersonal : /proxy-noflood-personal on
-  .&channel : /proxy-noflood-channel on
-  .-
-  .info : script_info -flood
-  mirc &commands
-  .interface
-  ..$iif(($switchbar),$style(1)) show swichbar : switchbar $iif(($switchbar),off,on)
-  ..$iif(($treebar),$style(1)) [show treebar] : treebar $iif(($treebar),off,on)
-  ..$iif(($menubar),$style(1)) [show menubar] : menubar $iif(($menubar),off,on)
-  channel &assistance
-  .$bnc_active topi&c history
-  ..$iif(($chan),$iif(($varname_glob(topic-history-clear,$chan).value || $varname_glob(topic-history-clear,everywhere).value),$style(2))) open reader history : bnc_msg topic-history $chan
-  ..-
-  ..$iif(($chan),$iif(($varname_glob(topic-history-clear,$chan).value || $varname_glob(topic-history-clear,everywhere).value),$style())) clear &channel's topic history : bnc_msg clear-topic-history $chan
-  ..$iif((!$varname_glob(topic-history-clear,everywhere).value),$null,$style(3)) clear topic history &everywhere : bnc_msg clear-topic-history-everywhere
-  ..$iif(($varname_glob(topic-history-freeze,$chan).value || $varname_glob(topic-history-freeze,everywhere).value),$style(1)) freeze &topic history
-  ...$iif(($chan),$iif(($varname_glob(topic-history-freeze,$chan).value),$style(1)),$style(2)) this &channel : bnc_msg topic_history_freeze-toggle $chan
-  ...$iif(($varname_glob(topic-history-freeze,everywhere).value),$style(1)) &everywhere : bnc_msg topic_history_freeze_everywhere-toggle
-  ..-
-  ..info : script_info -history
-  .$bnc_active mode history
-  ..$iif(($chan),$iif(($varname_glob(mode-history-clear,$chan).value || $varname_glob(mode-history-clear,everywhere).value),$style(2))) open reader history : bnc_msg mode-history $chan
-  ..-
-  ..$iif(($chan),$iif(($varname_glob(mode-history-clear,$chan).value || $varname_glob(mode-history-clear,everywhere).value),$style())) clear channel's mode history : bnc_msg clear-mode-history $chan
-  ..$iif((!$varname_glob(mode-history-clear,everywhere).value),$null,$style(3)) clear mode history everywhere : bnc_msg clear-mode-history-everywhere
-  ..$iif(($varname_glob(mode-history-freeze,$chan).value || $varname_glob(mode-history-freeze,everywhere).value),$style(1)) freeze mode history
-  ...$iif(($chan),$iif(($varname_glob(mode-history-freeze,$chan).value),$style(1)),$style(2)) this channel : bnc_msg mode_history_freeze-toggle $chan
-  ...$iif(($varname_glob(mode-history-freeze,everywhere).value),$style(1)) everywhere : bnc_msg mode_history_freeze_everywhere-toggle
-  ..-
-  ..info : script_info -history
-
-  .$bnc_active user status history
-  ..$iif(($chan),$iif(($varname_glob(status-history-clear,$chan).value || $varname_glob(status-history-clear,everywhere).value),$style(2))) open reader history : bnc_msg status-history $chan
-  ..-
-  ..$iif(($chan),$iif(($varname_glob(status-history-clear,$chan).value || $varname_glob(status-history-clear,everywhere).value),$style())) clear channel's status history : bnc_msg clear-status-history $chan
-  ..$iif((!$varname_glob(status-history-clear,everywhere).value),$null,$style(3)) clear status history everywhere : bnc_msg clear-status-history-everywhere
-  ..$iif(($varname_glob(status-history-freeze,$chan).value || $varname_glob(status-history-freeze,everywhere).value),$style(1)) freeze status history
-  ...$iif(($chan),$iif(($varname_glob(status-history-freeze,$chan).value),$style(1)),$style(2)) this channel : bnc_msg status_history_freeze-toggle $chan
-  ...$iif(($varname_glob(status-history-freeze,everywhere).value),$style(1)) everywhere : bnc_msg status_history_freeze_everywhere-toggle
-  ..-
-  ..info : script_info -history
-  .-
-  .$iif((!$bnc_active),$iif((!$varname_cid(update-ial-entry).value),$style(2)),$style(1)),$style(2)) update /who on entry
-  .$iif((!$bnc_active),$iif((!$varname_cid(update-chan-lists).value),$style(2)),$style(1)),$style(2)) update ban/exception/invite lists
-  .-
-  .$iif((!$chan),$style(2),$iif((!$bnc_active),$iif((!$varname_glob(say-away,none).value),$null,$style(1)),$style(2))) announce away in channels : bnc_msg say-away-toggle
-
-
-  .-
-  .$bnc_active ircoper scan
-  ..scan now here : bnc_msg operscan$chan
-  ..scan now everywhere : bnc_msg operscan-ecerywhere
-  ..-
-  ..scan on-join (all channels) : bnc_msg operscan-join-toggle
-  .$iif((!$bnc_active),$iif((!$chan),$style(2))) /who status : bnc_msg who-status $chan
 
   &trio-ircproxy.py
   .$bnc_active &set server identity
@@ -186,10 +130,10 @@ menu Status,Channel {
     var %pp = $$?="enter two port numbers; for proxy and http [1-65535]:" 
     var %p = $gettok(%pp,1,32)
     if (!%p) { errecho you must supply two port numbers; one for proxy and another for http | return }
-    if (!$isnum(%p)) || (%p < 1) or (%p > 65535) { errecho invalid port number. port must be from 1 to 65535 | return }
+    if (!$isnum(%p)) || (%p < 1) || (%p > 65535) { errecho invalid port number. port must be from 1 to 65535 | return }
     var %p = $gettok(%pp,2,32)
     if (!%p) { errecho you must supply two port numbers | return }
-    if (!$isnum(%p)) || (%p < 1) or (%p > 65535) { errecho invalid port number. port must be from 1 to 65535 | return }
+    if (!$isnum(%p)) || (%p < 1) || (%p > 65535) { errecho invalid port number. port must be from 1 to 65535 | return }
     bnc_msg use-port $gettok(%pp,1-2,32)
   }
   ..$iif(($varname_glob(use-port,proxy).value == 4321 && $varname_glob(use-port,http).value == 80),$style(1)) [4321/80] : /bnc_msg use-port 4321 80
