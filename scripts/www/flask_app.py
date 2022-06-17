@@ -9,11 +9,14 @@ from __future__ import annotations
 
 # from werkzeug.datastructures import RequestCacheControl as RCC
 import sys
-from website import w3_prefix, website_named_host, website_port
+from os import path
+from os.path import exists
+
 from flask import Flask
 from flask_login import LoginManager
-from os.path import exists
-from os import path
+
+from website.cwd_flask import w3_prefix, website_named_host, website_port
+
 _dir = path.dirname(path.abspath(__file__))
 w3_dir = path.join(_dir, "website", "templates")
 w3proxy_dir = path.join(_dir, "..", "website_and_proxy")
@@ -28,6 +31,7 @@ DB_NAME = "database.db"
 
 
 def create_app():
+
     app_new.config['SECRET_KEY'] = 'p0ldogn678xkdmcvf876lopr45bgnmkiyfxzaqw345tyu8'
     app_new.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     app_new.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -36,7 +40,6 @@ def create_app():
     w3_root: str = w3_prefix or '/'
     from website.views import views
     from website.auth import auth
-    from website import set_dirs
     if not auth:
         return
     app_new.register_blueprint(views, url_prefix=w3_root)
@@ -55,9 +58,9 @@ def create_app():
     _dir = path.dirname(path.abspath(__file__))
     app_new.template_folder = path.join(_dir, "website", "templates")
     app_new.static_folder = path.join(_dir, "website", "static")
-    app_dir = path.join(_dir, "app")
-    set_dirs(app_new.static_folder, app_new.template_folder, app_dir)
-
+    from website import APP_DIR, STATIC_DIR
+    APP_DIR[0] = path.join(_dir, "app")
+    STATIC_DIR[0] = app_new.static_folder
     return app_new
 
 
@@ -86,6 +89,7 @@ def begin_flask():
         print("\nERROR: Unable to listen on flask website listening port, maybe it is already running somewhere" \
                 + " else, or listening port is in use by another application. Or, you need privileged access -- if" \
                 + " so, set port to one chosen from between the range of 1024 to 5000.")
+
 
 app = create_app()
 

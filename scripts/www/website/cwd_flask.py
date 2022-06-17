@@ -1,33 +1,37 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from __future__ import annotations
+
 # Change to .ini file
 from configparser import ConfigParser
+from os import environ
+from os import path
+_dir = path.dirname(path.abspath(__file__))
+ini_file = path.join(_dir, '..', 'www-server-config.ini')
+
 w3_server: ConfigParser = ConfigParser()
-w3_server.read('www-server-config.ini')
+w3_server.read(ini_file)
 
-class Server_INI(ConfigParser):
-    def __init__(self):
-        self.w3_server: ConfigParser = super(ConfigParser)
-        self.w3_server.read('www-server-config.ini')
-        if 'DEFAULT' not in self.w3_server:
-            self.w3_server.add_section(self.w3_server, 'DEFAULT')
-        if not 'url-prefix' in self.w3_server["DEFAULT"]:
-            self.w3_server['DEFAULT']['url-prefix'] = '/'
-        if not 'web-server-hostname' in self.w3_server['DEFAULT']:
-            self.w3_server['DEFAULT']['web-server-hostname'] = '127.0.0.1'
-        else:
-            if not 'web-server-port' in self.w3_server['DEFAULT']:
-                self.w3_server['DEFAULT']['web-server-port'] = '80'
-        super().__init__(self)
+if 'DEFAULT' not in w3_server:
+    w3_server.add_section('DEFAULT')
+if not 'url-prefix' in w3_server["DEFAULT"]:
+    w3_server['DEFAULT']['url-prefix'] = '/'
+if not 'web-server-hostname' in w3_server['DEFAULT']:
+    w3_server['DEFAULT']['web-server-hostname'] = '127.0.0.1'
+if not 'web-server-port' in w3_server['DEFAULT']:
+    w3_server['DEFAULT']['web-server-port'] = '80'
 
-S
-    def save_w3_server(self):
-        super().__init__(self)
+if 'Service' not in w3_server:
+    w3_server.add_section('Service')
 
+if 'PYTHONANYWHERE_DOMAIN' in environ and 'USERNAME' in environ:
+    url = environ['USERNAME'] + '.' + environ['PYTHONANYWHERE_DOMAIN']
+    w3_server['Service']['web-server-hostname'] = url
 
-w3_ini: Server_INI = Server_INI()
+with open(ini_file, 'w') as fpwrite:
+    w3_server.write(fpwrite, space_around_delimiters=True)
 
-w3_prefix: str = w3_server['DEFAULT']['url-prefix'] or '/'
-website_named_host: str = w3_server['DEFAULT']['web-server-hostname'] or '127.0.0.1'
-website_port: int = int(w3_server['DEFAULT']['web-server-port']) or '80'
+w3_prefix: str = w3_server['Service']['url-prefix'] or '/'
+website_named_host: str = w3_server['Service']['web-server-hostname'] or '127.0.0.1'
+website_port: int = int(w3_server['Service']['web-server-port']) or 80

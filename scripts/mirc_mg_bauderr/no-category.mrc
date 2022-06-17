@@ -1,4 +1,12 @@
-; Allow BitchX in no swearing rule
+on *:start: {
+  set $varname_cid(status-name) $+($r(a,z),$r(a,z),$r(a,z),$r(a,z),$r(a,z),$r(a,z),$r(a,z))
+}
+on *:active:*: {
+  if (!$varname_cid(status-name).value) {
+    set $varname_cid(status-name) $+($r(a,z),$r(a,z),$r(a,z),$r(a,z),$r(a,z),$r(a,z),$r(a,z))
+  }
+}
+
 on *:start: {
   bde_start
 }
@@ -15,7 +23,7 @@ alias qw {
   while ($right(%text,1) isin '"`) { %text = $left(%text,-1) }
   return " $+ %text $+ "
 }
-on *:privmsg:*:$chr(42) $+ status: {
+on *:privmsg:*:* $+ $chr(42) $+ status: {
   tokenize 32 $strip($1-)
   if (Trio-ircproxy.py active* iswm $1-) { set $varname_cid(trio-ircproxy.py,active) $true }
 }
@@ -44,7 +52,11 @@ alias varname_global {
   if ($prop == value) { return [ [ %varname ] ] }
   return %varname
 }
-
+alias varname_glob {
+  var %varname = $+(%,bde_glob_,$1,!,$iif(($2 == $null),blank,$2))
+  if ($prop == value) { return [ [ %varname ] ] }
+  return %varname
+}
 alias script_info {
   tokenize 32 $strip($1-)
   if (!$0) { return }

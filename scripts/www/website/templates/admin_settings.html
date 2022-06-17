@@ -1,16 +1,12 @@
 {% extends 'base.html' %}
 {% block title %}Server's administrator settings{% endblock title %}
+{% block h1 %}Server Settings, for the Administrator{% endblock h1 %}
 {% block content %}
-{% block h1 %}ServEr SettIngs, for the AdmiNistRatoR{% endblock h1 %}
 <p>
     The following settings will take affect as soon as you submit the form.
 </p>
-<p>
-  {{ json_data.home['home']['server_name'] }}
-</p>
-<p>
 <form action="/admin/post/home-data.py" method="POST">
-  <header><h3 align="center">Basic Information</h3></header>
+  <header><h3 align="center">System Information</h3></header>
   <div class="form-group">
     <label for="server_name">Server Name</label>
     <input
@@ -23,7 +19,7 @@
     />
   </div>
   <div class="form-group">
-    <label for="admin_name">Admin Name</label>
+    <label for="admin_name">Admin NickName</label>
     <input
       type="text"
       class="form-control"
@@ -35,13 +31,13 @@
     />
   </div>
       <div class="form-group">
-    <label for="email">Your Email Address</label>
+    <label for="email">System Email Address</label>
     <input
       type="email"
       class="form-control"
       id="email"
       name="email"
-      placeholder="your email address"
+      placeholder="system e-mail address"
       value="{{ json_data.home['home']['email'] }}"
     />
   </div>
@@ -60,7 +56,7 @@
   <div class="form-group">
     <label for="smtp_password1">Email Password</label>
     <input
-      type="password"
+      type="text"
       class="form-control"
       id="smtp_password1"
       name="smtp_password1"
@@ -71,7 +67,7 @@
   <div class="form-group">
     <label for="smtp_password2">Password (Confirm)</label>
     <input
-      type="password"
+      type="text"
       class="form-control"
       id="smtp_password2"
       name="smtp_password2"
@@ -82,5 +78,4 @@
   <br />
   <button type="submit" class="btn btn-primary">Save</button>
 </form>
-</p>
 {% endblock content %}

@@ -6,7 +6,7 @@ from flask import render_template, make_response, request, url_for, redirect
 from flask import Blueprint, flash, jsonify
 from flask_login import login_required, current_user
 import sys
-
+from os import path
 from website import APP_DIR, STATIC_DIR
 from user_db import Note
 from user_db import db
@@ -31,58 +31,60 @@ def screen00():
 
 @views.route('/images/background.jpg', methods=['GET', 'HEAD'])
 def background():
-    with open(STATIC_DIR[0] / 'background.jpg', 'rb') as sfopen:
+    with open(path.join(STATIC_DIR[0], 'background.jpg'), 'rb') as sfopen:
         resp = make_response(sfopen.read(), 200, {'Content-Type': 'image/jpeg; charset=utf-8'})
     return resp
 
 
 @views.route('/favicon.ico', methods=['GET', 'HEAD'])
 def favicon():
-    with open(STATIC_DIR[0] / 'favicon.ico', 'rb') as sfopen:
+    with open(path.join(STATIC_DIR[0], 'favicon.ico'), 'rb') as sfopen:
         resp = make_response(sfopen.read(), 200, {'Content-Type': 'image/jpeg; charset=utf-8'})
     return resp
 
 
 @views.route('/site.webmanifest', methods=['GET', 'HEAD'])
 def manifest():
-    with open(STATIC_DIR[0] / 'site.webmanifest', 'r') as sfopen:
+    with open(path.join(STATIC_DIR[0], 'site.webmanifest'), 'r') as sfopen:
         resp = make_response(sfopen.read(), 200, {'Content-Type': 'text/ascii; charset=utf-8'})
     return resp
 
 
 @views.route('/android-chrome-192x192.png', methods=['GET', 'HEAD'])
 def androidchrome192():
-    with open(STATIC_DIR[0] / 'android-chrome-192x192.png', 'rb') as sfopen:
+    with open(path.join(STATIC_DIR[0], 'android-chrome-192x192.png'), 'rb') as sfopen:
         resp = make_response(sfopen.read(), 200, {'Content-Type': 'image/png; charset=utf-8'})
     return resp
 
 
 @views.route('/android-chrome-512x512.png', methods=['GET', 'HEAD'])
 def androidchrome512():
-    with open(STATIC_DIR[0] / 'android-chrome-512x512.png', 'rb') as sfopen:
+    with open(path.join(STATIC_DIR[0], 'android-chrome-512x512.png'), 'rb') as sfopen:
         resp = make_response(sfopen.read(), 200, {'Content-Type': 'image/png; charset=utf-8'})
     return resp
 
 
 @views.route('/apple-touch-icon.png', methods=['GET', 'HEAD'])
 def androidappletouch():
-    with open(STATIC_DIR[0] / 'apple-touch-icon.png', 'rb') as sfopen:
+    with open(path.join(STATIC_DIR[0], 'apple-touch-icon.png'), 'rb') as sfopen:
         resp = make_response(sfopen.read(), 200, {'Content-Type': 'image/png; charset=utf-8'})
     return resp
 
 
 @views.route('/favicon-16x16.png', methods=['GET', 'HEAD'])
 def androidfavicon16():
-    with open(STATIC_DIR[0] / 'favicon-16x16.png', 'rb') as sfopen:
+    with open(path.join(STATIC_DIR[0], 'favicon-16x16.png'), 'rb') as sfopen:
         resp = make_response(sfopen.read(), 200, {'Content-Type': 'image/png; charset=utf-8'})
     return resp
 
 
 @views.route('/favicon-32x32.png', methods=['GET', 'HEAD'])
 def androidfavicon32():
-    with open(STATIC_DIR[0] / 'favicon-32x32.png', 'rb') as sfopen:
+    with open(path.join(STATIC_DIR[0], 'favicon-32x32.png'), 'rb') as sfopen:
         resp = make_response(sfopen.read(), 200, {'Content-Type': 'image/png; charset=utf-8'})
     return resp
+
+
 @views.route('/coc/index.py', methods=['GET', 'HEAD'])
 @views.route('/coc/index.htm', methods=['GET', 'HEAD'])
 @views.route('/coc/index.html', methods=['GET', 'HEAD'])
@@ -189,58 +191,16 @@ def about():
     return resp
 
 
-
 @views.route('/bouncers/', methods=['GET', 'HEAD'])
 @views.route('/vhost/', methods=['GET', 'HEAD'])
 @views.route('/vhosts/', methods=['GET', 'HEAD'])
 @views.route('/proxy/', methods=['GET', 'HEAD'])
 @views.route('/proxies/', methods=['GET', 'HEAD'])
-@views.route('/vhosts.html', methods=['GET', 'HEAD'])
-@views.route('/vhosts.htm', methods=['GET', 'HEAD'])
-@views.route('/vhosts.py', methods=['GET', 'HEAD'])
-@views.route('/vhost.html', methods=['GET', 'HEAD'])
-@views.route('/vhost.htm', methods=['GET', 'HEAD'])
-@views.route('/vhost.py', methods=['GET', 'HEAD'])
-@views.route('/bounce/', methods=['GET', 'HEAD'])
-@views.route('/bounce.htm', methods=['GET', 'HEAD'])
-@views.route('/bouncers.htm', methods=['GET', 'HEAD'])
-@views.route('/bouncers.html', methods=['GET', 'HEAD'])
-@views.route('/bouncers.py', methods=['GET', 'HEAD'])
-@views.route('/bounce.html', methods=['GET', 'HEAD'])
-@views.route('/bounce.py', methods=['GET', 'HEAD'])
-@views.route('/proxy.py', methods=['GET', 'HEAD'])
-@views.route('/proxy.htm', methods=['GET', 'HEAD'])
-@views.route('/proxy.html', methods=['GET', 'HEAD'])
-@views.route('/proxies.py', methods=['GET', 'HEAD'])
-@views.route('/proxies.htm', methods=['GET', 'HEAD'])
-@views.route('/proxies.html', methods=['GET', 'HEAD'])
-@views.route('/bnc/bouncers/', methods=['GET', 'HEAD'])
-@views.route('/bnc/bounce/', methods=['GET', 'HEAD'])
-@views.route('/bnc/vhost/', methods=['GET', 'HEAD'])
-@views.route('/bnc/vhosts/', methods=['GET', 'HEAD'])
-@views.route('/bnc/proxy/', methods=['GET', 'HEAD'])
-@views.route('/bnc/proxies/', methods=['GET', 'HEAD'])
-@views.route('/bnc/vhosts.html', methods=['GET', 'HEAD'])
-@views.route('/bnc/vhosts.htm', methods=['GET', 'HEAD'])
-@views.route('/bnc/vhosts.py', methods=['GET', 'HEAD'])
-@views.route('/bnc/vhost.html', methods=['GET', 'HEAD'])
-@views.route('/bnc/vhost.htm', methods=['GET', 'HEAD'])
-@views.route('/bnc/vhost.py', methods=['GET', 'HEAD'])
-@views.route('/bnc/bounce.htm', methods=['GET', 'HEAD'])
-@views.route('/bnc/bouncers.htm', methods=['GET', 'HEAD'])
-@views.route('/bnc/bouncers.html', methods=['GET', 'HEAD'])
-@views.route('/bnc/bouncers.py', methods=['GET', 'HEAD'])
 @views.route('/bnc/bounce.html', methods=['GET', 'HEAD'])
-@views.route('/bnc/bounce.py', methods=['GET', 'HEAD'])
-@views.route('/bnc/proxy.py', methods=['GET', 'HEAD'])
-@views.route('/bnc/proxy.htm', methods=['GET', 'HEAD'])
-@views.route('/bnc/proxy.html', methods=['GET', 'HEAD'])
-@views.route('/bnc/proxies.py', methods=['GET', 'HEAD'])
-@views.route('/bnc/proxies.html', methods=['GET', 'HEAD'])
-@views.route('/bnc/proxies.htm', methods=['GET', 'HEAD'])
+@views.route('/irc/bounce.html', methods=['GET', 'HEAD'])
 def bounce():
     vj: dict
-    with open(APP_DIR[0] / 'bnc.json', 'r') as sfopen:
+    with open(path.join(APP_DIR[0], 'bnc.json'), 'r') as sfopen:
         vj = json.load(sfopen)
     resp = make_response(render_template('bounce.html', user=current_user, bnc_list=vj), 200)
     no_cache(resp)

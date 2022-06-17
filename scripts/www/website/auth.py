@@ -73,13 +73,13 @@ def settings():
     else:
         return redirect(url_for('auth.login'))
 
-@auth.route('/admin/post/home-data.py', methods=['POST'])
+@auth.route('/admin/post/home-data.py', methods=['GET', 'POST'])
 def home_data():
     if request.method != 'POST':
         flash('this is not an web-page with content. url is only for POSTing only!', category='error')
         return redirect(url_for('views.home'))
     if hasattr(current_user, 'user_name') and current_user.user_name != 'admin':
-        flash('you MUST log-in as the Admin to post to this URL.')
+        flash('you MUST log-in as the Admin to post to this URL.', category='error')
         return redirect(url_for('auth.login'))
 
     if not request.form.get('server_name'):

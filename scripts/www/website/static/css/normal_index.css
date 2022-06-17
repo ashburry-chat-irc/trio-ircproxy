@@ -10,6 +10,20 @@
     font-weight:normal;
     font-style:normal
 }
+@font-face{
+    font-family:'Aloevera';
+    src:url('../fonts/Aloevera.ttf') format('truetype');
+    font-weight:normal;
+    font-style:normal
+}
+@font-face{
+    font-family:'Spectral-Medium';
+    src:url('../fonts/Spectral-Medium.ttf') format('truetype');
+    font-weight:normal;
+    font-style:normal
+}
+
+
 
 body {
     background-color: black;
@@ -17,21 +31,24 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: left center;
-    font-family: "Exo-ExtraLight", serif;
     color: #fffdd0;
 }
 p, pre {
-    font-family: "Exo-ExtraLight", serif;
+    font-size: 1.1em;
+    font-family: "Spectral-Medium";
     color: #fffdd0;
 }
 h1 {
   font-size: 3em;
   text-align: center;
 }
-h1, h2, h3, h4, h5, h6 {
+h1 {
+    font-family: "Aloevera", serif;
+    color: #FFFF33;
+}
+h2, h3, h4, h5, h6 {
     font-family: "LittlemomentRegular-OVneP", serif;
     color: #FFFF33;
-
 }
 .yellow, #yellow {
     color: #fcffa4;

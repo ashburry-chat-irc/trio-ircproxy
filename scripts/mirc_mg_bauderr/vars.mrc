@@ -23,3 +23,4 @@
 %bde_glob_topic_history_#5ioE!1653987264 66,88The offical 5ioE (side) Gang channel. Help and Support insidee https://ashburry.pythonanywhere.com
 %bde_glob_topic_history_#5ioE!1653987334 66,88The 5ioE (side) Gang offical channel. Project Help and Support insidee https://ashburry.pythonanywhere.com
 %bde_glob_topic_history_#XInvite!1654029248 dfdgjhkhjkl;l'';
+%bde_glob_topic_history_#5ioE!1655395732 66,1Side Gang Official help and support channel. Python 3 programming in session.

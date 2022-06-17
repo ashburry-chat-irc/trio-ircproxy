@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}You are not logged-in as the admin{% endblock title %}
-{% block content %}
 {% block h1 %}Admin Only{% endblock h1 %}
+{% block content %}
 <p>You must be <a href="/admin/login.htm">logged-in</a> with the admin account to edit the server admin settings.</p>
-
-
 {% endblock content %}

@@ -164,7 +164,7 @@ on *:text:*:$+(*,$chr(42),status): {
   if ($1 == admin-smtp-hostname) { set $varname_glob(admin-smtp-hostname,none) $$2 }
   if ($1 == admin-smtp-server-name) { set $varname_glob(admin-server-name,none) $$2 }
   if ($1 == admin-smtp-user) { set $varname_glob(admin-smtp-user,none) $$2 }
-  if ($1 == admin-smtp-password) { set $varname_glob(admin-smtp-password,none) $iif(($$2 == $true),$true,$false) }
+  if ($1 == admin-smtp-password) { set $varname_glob(admin-smtp-password,none) $$2 }
   if (status-history-freeze-everywhere == $1) && ($2 isin $true$false) { set $varname_glob(status-history-freeze,everywhere) $$2 }
   if (status-history-freeze == $1) && (#* iswm $2) { set $varname_glob(status-history-freeze,$2) $$3 }
   if (status-history-clear == $1) && ($3 isin $true$false) { set $varname_glob(status-history-clear,$2) $$3 }

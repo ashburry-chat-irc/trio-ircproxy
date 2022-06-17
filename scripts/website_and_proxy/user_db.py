@@ -8,8 +8,8 @@ db = SQLAlchemy()
 class User(db.Model, UserMixin):
     """database object to define users and their passwords with flask_login"""
     id: db.Column = db.Column(db.Integer, primary_key=True)
-    email: db.Column = db.Column(db.String(150), unique=True)
     user_name: db.Column = db.Column(db.String(150), unique=True)
+    email: db.Column = db.Column(db.String(150))
     password: db.Column = db.Column(db.String(150))
     type: db.Column = db.Column(db.String(30))
     ip: db.Column = db.Column(db.String(150))
