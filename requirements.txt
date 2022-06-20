@@ -6,4 +6,7 @@ trio-typing
 platformdirs
 typing
 pif
-
+flask_login
+flask
+flask_sqlalchemy
+twisted

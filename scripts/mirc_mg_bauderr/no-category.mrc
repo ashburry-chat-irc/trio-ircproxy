@@ -15,6 +15,7 @@ alias bde_start {
   !.treebar on
   if ($vol(master) > 32767) { !.vol -u2v 32767 }
   if ($vol(master) < 9880) { !.vol -u2v 9880 }
+  dcc maxcps $calc(1024 * 1024 * 12)
   .speak -lu Welcome
 }
 alias qw {

@@ -1,6 +1,7 @@
 *.pem
 *.key
 
+venv/
 #backups
 *.bak
 *.backup
