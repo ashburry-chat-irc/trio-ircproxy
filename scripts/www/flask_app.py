@@ -12,6 +12,8 @@ if not already set to such values.
 This script provides an  "app" variable suitable for PythonAnywhere.com server and will not run as
 an server if flask_app.py is imported, instead of executed on the command line.
 
+Edit the www-server-config.ini file to set your
+
 """
 from __future__ import annotations
 
@@ -77,9 +79,9 @@ def create_database(app):
         db.create_all(app=app)
 
 
-from threading import Thread
 def begin_flask():
     try:
+        from threading import Thread
         from twisted.internet import reactor
         from twisted.web.server import Site
         from twisted.web.wsgi import WSGIResource
@@ -98,10 +100,10 @@ def begin_flask():
         th.join()
         #app.run(n_host, i_port, debug=True)
     except CannotListenError:
-        print("\nERROR: Unable to listen on flask website listening port,", end=None)
-        print("flask_app.py must be already running somewhere", end=None)
-        print(", or the listening port is in use by some other app. Or, you do not have privileged access to", end=None)
-        print(f"listen on this port ({str(i_port)})")
+        print("\nERROR: Unable to listen on flask website listening port,")
+        print("flask_app.py must be already running somewhere,")
+        print("or the listening port is in use by some other app.")
+        print(f"Or, you do not have privileged access to listen on this port ({str(i_port)})")
 
 
 app = create_app()
