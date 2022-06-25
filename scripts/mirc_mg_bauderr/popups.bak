@@ -94,4 +94,4 @@ n16=.-
 n17=.with proxy 
 n18=.with vhost
 n19=.without proxy nor vhost : /proxy off | /server $server(1, $iif(($network),$network,$$?="enter network name:"))
-n20=$iif(($status == connected),&quit irc) : quit 54,88.: Machine Gun script named Bauderr :: :
+n20=$iif(($status == connected),&quit irc) : quit 54,88.: MG script named Bauderr :: :

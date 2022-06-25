@@ -2,7 +2,15 @@
 # -*- coding: utf-8 -*-
 
 """
-This script runs the application using an production server on your local machine.
+This script runs the application using an production server on your local machine or as an app when imported
+by PythonAnywhere.com.
+
+On PythonAnywhere.com click on the "WEB" link and scroll down to where it says:
+"Source Code:" and change it to "/home/username/www/" set your "Working directory" to /home/username/,
+if not already set to such values.
+
+This script provides an  "app" variable suitable for PythonAnywhere.com server and will not run as
+an server if flask_app.py is imported, instead of executed on the command line.
 
 """
 from __future__ import annotations
@@ -69,7 +77,7 @@ def create_database(app):
         db.create_all(app=app)
 
 
-
+from threading import Thread
 def begin_flask():
     try:
         from twisted.internet import reactor
@@ -81,14 +89,19 @@ def begin_flask():
         n_host: str = str(website_named_host) or '127.0.0.1'
         # Uncomment the 3 lines below and comment out the app.run() for Windows
         # compatable production server.
-        #flask_site = WSGIResource(reactor, reactor.getThreadPool(), app)
-        #reactor.listenTCP(i_port, Site(flask_site), 65535, n_host)
-        #reactor.run()
-        app.run(n_host, i_port, debug=True)
+        flask_site = WSGIResource(reactor, reactor.getThreadPool(), app)
+        reactor.listenTCP(i_port, Site(flask_site), 65535, n_host)
+        print(f"Attempting to open flask_app.py with port {str(i_port)}")
+        th = Thread(target=reactor.run())
+        th.start()
+        reactor.run()
+        th.join()
+        #app.run(n_host, i_port, debug=True)
     except CannotListenError:
-        print("\nERROR: Unable to listen on flask website listening port, maybe it is already running somewhere" \
-                + " else, or listening port is in use by another application. Or, you need privileged access -- if" \
-                + " so, set port to one chosen from between the range of 1024 to 5000.")
+        print("\nERROR: Unable to listen on flask website listening port,", end=None)
+        print("flask_app.py must be already running somewhere", end=None)
+        print(", or the listening port is in use by some other app. Or, you do not have privileged access to", end=None)
+        print(f"listen on this port ({str(i_port)})")
 
 
 app = create_app()

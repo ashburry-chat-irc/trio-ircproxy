@@ -205,3 +205,10 @@ def bounce():
     resp = make_response(render_template('bounce.html', user=current_user, bnc_list=vj), 200)
     no_cache(resp)
     return resp
+
+
+@views.route('/test.html', methods=['GET', 'HEAD'])
+def test():
+    resp = make_response(render_template('test.html', user=current_user), 200)
+    no_cache(resp)
+    return resp

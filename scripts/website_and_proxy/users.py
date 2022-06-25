@@ -13,7 +13,7 @@ def status_msg(client_socket: trio.SocketStream | trio.SSLStream, msg: str):
     from scripts.trio_ircproxy.socket_data import SocketData
     if not msg:
         return
-    msg = ':*STATUS!trio-ircproxy.py@mgscript.com PRIVMSG ' + SocketData.mynick[client_socket] + ' '+msg + '\n'
+    msg = ':~STATUS!trio-ircproxy.py@mgscript.com PRIVMSG ' + SocketData.mynick[client_socket] + ' '+msg + '\n'
     if client_socket in SocketData.send_buffer:
         SocketData.send_buffer[client_socket].append(msg)
 
