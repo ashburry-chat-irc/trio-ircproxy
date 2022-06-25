@@ -92,7 +92,7 @@ def begin_flask():
         # compatable production server.
         flask_site = WSGIResource(reactor, reactor.getThreadPool(), app)
         reactor.listenTCP(i_port, Site(flask_site), 65535, n_host)
-        print(f"Attempting to open flask_app.py with port {str(i_port)}")
+        print(f"-+\nAttempting to open flask_app.py with port {str(i_port)}\n-+")
         th = Thread(target=reactor.run())
         th.start()
         reactor.run()
