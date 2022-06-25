@@ -1,8 +1,9 @@
-flask
 flask_login
+flask
 flask_sqlalchemy
-cryptography
-trio
-pif
-platformdirs
 twisted
+platformdirs
+cryptography
+pif
+trio
+# 
