@@ -85,8 +85,7 @@ def begin_flask():
         from twisted.internet import reactor
         from twisted.web.server import Site
         from twisted.web.wsgi import WSGIResource
-        from twisted.internet.error import CannotListenError
-
+        from twisted.internet.error import CannotListenError, ReactorNotRestartable as RNR_Error
         i_port: int = int(website_port) or 80
         n_host: str = str(website_named_host) or '127.0.0.1'
         # Uncomment the 3 lines below and comment out the app.run() for Windows
@@ -104,10 +103,11 @@ def begin_flask():
         print("flask_app.py must be already running somewhere,")
         print("or the listening port is in use by some other app.")
         print(f"Or, you do not have privileged access to listen on this port ({str(i_port)})")
+    except RNR_Error:
+        pass
 
 
 app = create_app()
-
 
 if __name__ == '__main__':
     begin_flask()
