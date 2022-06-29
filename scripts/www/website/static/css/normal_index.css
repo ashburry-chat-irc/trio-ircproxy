@@ -22,7 +22,12 @@
     font-weight:normal;
     font-style:normal
 }
-
+@font-face{
+    font-family:'NO';
+    src:url('../fonts/NO.TTF') format('truetype');
+    font-weight:normal;
+    font-style:normal
+}
 
 
 body {
@@ -41,10 +46,23 @@ p, pre {
 h1 {
   font-size: 3em;
   text-align: center;
+  font-family: "NO", serif;
+  color: #FFFF33;
+font-weight: bolder;
 }
-h1 {
-    font-family: "Aloevera", serif;
-    color: #FFFF33;
+.ooo {
+  display: inline;
+  color: #fcffa4;
+}
+hr {
+  border-bottom: 1px solid #ccc;
+  margin: 10px 0;
+  width: 100%;
+}
+.oneline {
+  display: inline;
+  font-family: "Spectral-Medium", serif;
+  font-style: italic;
 }
 h2, h3, h4, h5, h6 {
     font-family: "LittlemomentRegular-OVneP", serif;
@@ -90,15 +108,15 @@ footer p {
 
 
 a:hover {
-    color: #FFCC33;
+    color: #FFCC99;
 }
 a:visted {
-    color: #FFFF33;
+    color: #FFFF00;
 }
 a:active {
-    color: #FFCC33;
+    color: #FFCC99;
 }
 a {
-    color: #FFFF33;
+    color: #FFFF00;
 }
 

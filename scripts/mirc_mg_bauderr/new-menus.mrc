@@ -96,7 +96,15 @@ menu Status,Channel {
   ..$advertise-user : bnc_msg advertise-username
   ..everywhere possible : bnc_msg advertise-everywhere
   -
-
+  room &assistance
+  .topic history
+  ..$iif((!$topic_history_popup(1)),$style(3)) clear topic history : unset $varname_cid(topic_history_*,*) | eecho topic history cleared for room $chan
+  ..-
+  ..$submenu($topic_history_popup($1)))
+  .chanserv
+  ..identify : /msg x identify baudsmoke
+  .irc oper scan
+  ..$iif($varname_global((oper-scan-join,$network).value == $true),$style(1)) scan on-join : set $varname_global(oper-scan-join,$network) $true
   &trio-ircproxy.py
   .&set server identity
   ..$style_proxy &server's name $block($varname_glob(admin-server-name,none).value) : /bnc_msg set-name $$?="enter your server's name (letters only):"
@@ -128,10 +136,6 @@ menu Status,Channel {
   ..-
   ..info : script_info -listen
 
-  .u&se status nickname
-  ..$iif(($varname_glob(status-nick,none).value == *status),$style(1)) *status : bnc_msg use-nick 1
-  ..$iif(($varname_glob(status-nick,none).value == ~status),$style(1)) [~status] : bnc_msg use-nick 2
-
   .u&se port
   ..change $block($varname_glob(use-port,proxy).value,/,$varname_glob(use-port,http).value) : {
     var %pp = $$?="enter two port numbers; for proxy then http [4321 80]:" 
@@ -155,6 +159,10 @@ menu Status,Channel {
   ..-
   ..info : script_info -port
   .-
+  .u&se status nickname
+  ..$status_usenick_pop(*status) *status : bnc_msg use-nick 1
+  ..$status_usenick_pop(~status) [~status] : bnc_msg use-nick 2
+  .-
   .$style_proxy running status : /bnc_msg status
   &connect irc
   .with proxy 
@@ -169,6 +177,10 @@ menu Status,Channel {
 }
 on *:quit: {
   if ($nick == $me) { set $varname(trio_ircproxy.py,active) $false }
+}
+alias status_usenick_pop {
+  if (!$varname_cid(trio-ircproxy.py,active).value) { return $style(2) }
+  if ($varname_glob(status-nick,none).value == $1) { return $style(1) }
 }
 alias style_proxy {
   if (!$varname_cid(trio-ircproxy.py,active).value) { return $style(2) }

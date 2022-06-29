@@ -6,32 +6,28 @@ n0=Info:/uwho $1
 n1=Whois:/whois $$1
 n2=Query:/query $$1
 n3=-
-n4=boolfanim
-n5=blackball *!*@address:/proxy-black $$1
-n6=$style(2) auto-arrive 13s ban : /Proxy-set-autoarrive on
-n7=fathead's last moment cut : /nick fathead $+ $r(99,9999) | /proxy-fathead $chan $$1 /me wonders how $1 is just noticing my holding of an long knife with both his hands... | /proxy-fathead $chan $1 /me reinforces his grip while stepping into an fighting stance... "Oh? Your thinking you are authorized, huh?" | /me talks some more fanim into this guys face. which makes $1 real angry; leaving an sour disgustful taste behind those fudging ears!!!!| /me tweaked its blade already so just stepping forward and swinging shoulder cuts infront of the spinal cord all the way threw their stomache, slight of the gut, which is clearer. | /me releives his fanim when $1's guts spill on the floor. starts dragging him out into the hallway with the absolute most fanim looking like entrails following at the back center. | /me slams the door on the last entrail leaving it somewhere behind some other rooms in broad daylight. $me yells through the door: | /kick $1 "Dont make me come in there where ur they're"
-n8=fathead steals the pill : /nick fathead $+ $r(99,9999) | /proxy-fathead-pill_one /me is looking around. Nobody notices its stealing when it is this sperm pill from just off the 'Sire Kenggi' room mantle in door "Number $remove($chan,#) $+ " | /me just remebered how it just tasted the first time...when it saved sire Kenggi, his HOST and this Master its OUIJI the IMAGiNE who shared up, blue and red warez. | /me suddenly flares with power and a clear vision of a life in 5ioE gang family. Starts smoldering drunkeness of control and power! | /me looks for the most fanim lamer conoundrall; to blame for its FLAILING_ABOUT. | /me cant help but notice $$1 smells mostly like fanim and seems extra lamer, probably topping on the nicklist of room numbers' $remove($chan,$chr(35)) lamest hall of flamer it's $1 thinks for sure, $me so users all his might attepting kicking $1 all the way through $comchan($nick,0) room doors to the hallway overthere... | /kick # $1 *BOOT*
-n9=Control
-n10=.Ignore:/ignore $$1 1
-n11=.Unignore:/ignore -r $$1 1
-n12=.Op:/mode # +ooo $$1 $2 $3
-n13=.Deop:/mode # -ooo $$1 $2 $3
-n14=.Voice:/mode # +vvv $$1 $2 $3
-n15=.Devoice:/mode # -vvv $$1 $2 $3
-n16=.Kick:/kick # $$1
-n17=.Kick (why):/kick # $$1 $$?="Reason:"
-n18=.Ban:/ban $$1 2
-n19=.Ban, Kick:/ban $$1 2 | /timer 1 3 /kick # $$1
-n20=.Ban, Kick (why):/ban $$1 2 | /timer 1 3 /kick # $$1 $$?="Reason:"
-n21=CTCP
-n22=.Ping:/ctcp $$1 ping
-n23=.Time:/ctcp $$1 time
-n24=.Version:/ctcp $$1 version
-n25=DCC
-n26=.Send:/dcc send $$1
-n27=.Chat:/dcc chat $$1
-n28=-
-n29=Slap!:/me slaps $$1 around a bit with a large trout
+n4=blackball *!*@address:/proxy-blackball $$1
+n5=Control
+n6=.Ignore:/ignore $$1 1
+n7=.Unignore:/ignore -r $$1 1
+n8=.Op:/mode # +ooo $$1 $2 $3
+n9=.Deop:/mode # -ooo $$1 $2 $3
+n10=.Voice:/mode # +vvv $$1 $2 $3
+n11=.Devoice:/mode # -vvv $$1 $2 $3
+n12=.Kick:/kick # $$1
+n13=.Kick (why):/kick # $$1 $$?="Reason:"
+n14=.Ban:/ban $$1 2
+n15=.Ban, Kick:/ban $$1 2 | /timer 1 3 /kick # $$1
+n16=.Ban, Kick (why):/ban $$1 2 | /timer 1 3 /kick # $$1 $$?="Reason:"
+n17=CTCP
+n18=.Ping:/ctcp $$1 ping
+n19=.Time:/ctcp $$1 time
+n20=.Version:/ctcp $$1 version
+n21=DCC
+n22=.Send:/dcc send $$1
+n23=.Chat:/dcc chat $$1
+n24=-
+n25=Slap!:/me slaps $$1 around a bit with a large trout
 
 [qpopup]
 n0=Info:/uwho $$1
@@ -57,21 +53,28 @@ n4=-
 n5=mirc &commands
 n6=proxy &commands
 n7=-
-n8=script &assitance
-n9=channel &assistance
-n10=irc oper scan
-n11=
-n12=-
-n13=&trio-ircproxy.py
-n14=&xdcc search
-n15=-
-n16=$iif(($status == connected),&quit irc): quit 54,88.: MG script named Bauderr :: :
-n17=&connect irc
-n18=.last used : /server
-n19=.-
-n20=.with proxy 
-n21=.with vhost
-n22=.without proxy nor vhost : /proxy off | /server $server(1, $iif(($network),$network,$$?="enter network name:"))
+n8=
+n9=room &assistance
+n10=.topic history
+n11=.irc oper scan
+n12=.chanserv
+n13=.-
+n14=
+n15=script &assitance
+n16=.&nickserv/X
+n17=..$style(1) auto-identify
+n18=
+n19=-
+n20=&trio-ircproxy.py
+n21=&xdcc search
+n22=-
+n23=$iif(($status == connected),&quit irc): quit 54,88.: MG script named Bauderr :: :
+n24=&connect irc
+n25=.last used : /server
+n26=.-
+n27=.with proxy 
+n28=.with vhost
+n29=.without proxy nor vhost : /proxy off | /server $server(1, $iif(($network),$network,$$?="enter network name:"))
 
 [mpopup]
 n0=$chr(46) $str($chr(58),1) M&achine Gun $str($chr(58),2) $chr(58)

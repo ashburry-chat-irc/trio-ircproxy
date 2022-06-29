@@ -6,7 +6,7 @@ platformdirs
 cryptography
 pif
 trio
-# The remaining packages are for trio-ircproxy.py not the web-server
+# The remaining packages are for trio-ircproxy.py only; not for the web-server.
 trio-typing
 pyopenssl
 gevent

@@ -1,11 +1,11 @@
 # .gitattributes snippet to force users to use same line endings for project.
         # 
-        # Handle line endings automatically for files detected as text
-        # and leave all files detected as binary untouched.
+        # Handle line endings automatically for files evaluated as text
+        # and leave all files evaluated as binary untouched.
         * text=auto
 
         #
-        # The above will handle all files NOT found below
+        # The above will handle all text files found directly below
         # https://help.github.com/articles/dealing-with-line-endings/
         # https://github.com/Danimoth/gitattributes/blob/master/Web.gitattributes
 
@@ -33,6 +33,9 @@
 
         # These files are binary and should be left untouched
         # (binary is a macro for -text -diff)
+        *.bat binary
+        *.ttf binary
+        *.otf binary
         *.png binary
         *.jpg binary
         *.jpeg binary

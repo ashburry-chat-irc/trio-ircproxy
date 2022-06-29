@@ -1,5 +1,4 @@
 from __future__ import annotations
-
 from flask import Blueprint, make_response, render_template, request, flash, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
@@ -7,7 +6,7 @@ from flask_sqlalchemy import BaseQuery
 from time import time
 
 import json
-
+from os import path
 from website import APP_DIR
 from user_db import User
 from user_db import db
@@ -391,7 +390,7 @@ def sign_up():
     if request.method == 'POST':
         ip = request.environ['REMOTE_ADDR']
         now: float = time()
-        with open(APP_DIR[0] / "flood.json", 'r') as sfopen:
+        with open(path.join(APP_DIR[0],"flood.json"), 'r') as sfopen:
             flood: dict = json.load(sfopen)
         remove: list = []
         count: int = 1
@@ -434,7 +433,7 @@ def sign_up():
             flood['ip_count'][ip] = 1
             flood['ip_time'][ip] = now
             ip_count = 1
-        with open(APP_DIR[0] / "flood.json", 'w') as sfopen:
+        with open(path.join(APP_DIR[0], "flood.json"), 'w') as sfopen:
             sfopen.write(json.dumps(flood))
         if count > 30 or ip_count > 20:
             return redirect(url_for('views.flood'))
