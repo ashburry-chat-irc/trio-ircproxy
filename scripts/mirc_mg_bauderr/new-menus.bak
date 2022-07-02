@@ -96,14 +96,16 @@ menu Status,Channel {
   ..$advertise-user : bnc_msg advertise-username
   ..everywhere possible : bnc_msg advertise-everywhere
   -
-  room &assistance
-  .topic history
-  ..$iif((!$topic_history_popup(1)),$style(3)) clear topic history : unset $varname_cid(topic_history_*) | eecho topic history cleared for room $chan
+  &room menu
+  .topi&c history
+  ..$iif((!$topic_history_popup(1)),$style(3)) clear topic history : unset $varname_cid(topic_history_*,*) | eecho topic history cleared for room $chan
   ..-
   ..$submenu($topic_history_popup($1)))
-  .chanserv
-  ..identify : /msg x identify baudsmoke
-  .irc oper scan
+  .&chanserv
+  ..$identify_here_popup : /bnc_msg identify-chanserv $$chan 
+  ..$popup-identify-founder-list
+  ...$submenu($identify_chans_popup($1))
+  .ir&c oper scan
   ..$iif($varname_global((oper-scan-join,$network).value == $true),$style(1)) scan on-join : set $varname_global(oper-scan-join,$network) $true
   &trio-ircproxy.py
   .&set server identity
@@ -175,12 +177,28 @@ menu Status,Channel {
   ;.xcdcc send #899 : /msg [MG]-MISC|EU|S|RandomPunk xdcc send #899
 
 }
+alias -l identify_here_popup {
+  if ($bool_using_proxy == $false) { return }
+  if ($varname_global(identify-chanserv,$+($chan,-,$$network)).value == $chan) { return identify here }
+}
+alias -l identify_chans_popup {
+  if ($1 == begin) { return }
+  if ($1 == end) { return }
+  var %chan = $var($varname_global(identify-chanserv,$+(*,-,$$network)),$1)
+  %chan = [ [ %chan ] ]
+  if (%chan == $null) && ($1 == 1) { return no channels : eecho you have not identified as founder of channel(s) on this network ( $+ $network $+ ). $chr(124) eecho after you identify as an founder your channel will be listed in the menu. }
+  return %chan : /bnc_msg identify-chanserv %chan
+}
 on *:quit: {
   if ($nick == $me) { set $varname(trio_ircproxy.py,active) $false }
 }
 alias status_usenick_pop {
   if (!$varname_cid(trio-ircproxy.py,active).value) { return $style(2) }
   if ($varname_glob(status-nick,none).value == $1) { return $style(1) }
+}
+alias bool_using_proxy {
+  if ($varname_cid(trio-ircproxy.py,active).value) { return $true }
+  return $false
 }
 alias style_proxy {
   if (!$varname_cid(trio-ircproxy.py,active).value) { return $style(2) }
@@ -206,18 +224,39 @@ on *:text:*:?status: {
   if (say-away == $1) && ($2 isin $true$false) { set $varname_glob(say-away,none) $2 }
   if (operscan-join == $1) && ($2 isin $true$false) { set $varname_glob(operscan-join,none) $2 }
   if ($1 == use-ports) { set $varname_global(use-port,proxy) $2 | set $varname_global(use-port,http) $3 }
+  if ($1 == identify-chanserv) {
+    var %i = 2
+    var %chan = $ [ $+ [ %i ] ]
+    while (%chan) {
+      set $varname_global(identify-chanserv,$+(%chan,-,$$network)) %chan
+      inc %i
+      var %chan = $ [ $+ [ %i ] ]
+    }
+  }
+  if ($1 == identify-nick) { return }
+}
+alias -l popup-identify-founder-list {
+  if ($bool_using_proxy == $false) {  return $style(2) identify as &founder  }
+  var %chan = $var($varname_global(identify-chanserv,$+(*,-,$$network)),1)
+  var %chan = [ [ %chan ] ]
+  if (%chan) { return identify as &founder }
 
 }
 alias true$false {
   return $true $+ $false
 }
 alias is_status_nick {
+  ;check is active nick is either one of the two status nicks available.
+  ;;
   if ($1) { var %nick = $1 }
   elseif ($nick != $null) { var %nick = $nick }
   if ($chr(42) $+ status != %nick) && (~status != %nick) { return $false }
   return $true
 }
 alias is_status {
+  ; Checks if active nick == satus-nick
+  ;;
+
   if ($1 != $null) { var %nick = $1 }
   elseif ($nick != $null) { var %nick = $nick }
   else { return $false }
@@ -229,7 +268,8 @@ menu menubar {
   $iif(($os isin 7,10,11),&set client faster) : eecho changed priority of all running $nopath($mircexe) and python.exe apps to 'High' | run -hn wmic process where name=" $+ $nopath($mircexe) $+ " CALL setpriority 128 | run -hn wmic process where name="python.exe" CALL setpriority 128
 
 }
-on *:input:*?> $chr(35) $+ ?*: {
+on *:input:$chan: {
+  if (*?> $chr(35) $+ ?* !iswm $1-) { return }
   tokenize 32 $strip($1-)
   if ($0 < 2) { return }
   var %num = $remove($2,$chr(35))
@@ -250,6 +290,7 @@ menu @script_info {
 }
 alias bnc_msg {
   if (!$varname_glob(status-nick,none).value) { return }
+  if ($bool_using_proxy != $true) { return }
   if ($strip($1) == $null) { return }
   if ($silence) { .msg $varname_glob(status-nick,none).value $1- }
   else { msg $varname_glob(status-nick,none).value $1- }

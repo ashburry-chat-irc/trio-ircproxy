@@ -46,6 +46,6 @@ alias topic_history_popup {
   if (%topic == $null) { return }
   var %top-pop = $strip($eval(%topic,2))
   if ($len(%top-pop) > 60) { %top-pop = $left(%top-pop, 58) ... }
-  %top-pop = $replace(%top-pop,$,&)
+  %top-pop = $replace(%top-pop,$,*)
   return $replace(%top-pop,:,!) : /editbox /topic %chan $eval(%topic,1)
 }
