@@ -14,7 +14,7 @@ alias qw {
   while ($right(%text,1) isin '"`) { %text = $left(%text,-1) }
   return " $+ %text $+ "
 }
-on *:privmsg:*:* $+ $chr(42) $+ status: {
+on *:privmsg:*:~status: {
   tokenize 32 $strip($1-)
   if (Trio-ircproxy.py active* iswm $1-) { set $varname_cid(trio-ircproxy.py,active) $true }
 }

@@ -161,10 +161,6 @@ menu Status,Channel {
   ..-
   ..info : script_info -port
   .-
-  .u&se status nickname
-  ..$status_usenick_pop(*status) *status : bnc_msg use-nick 1
-  ..$status_usenick_pop(~status) [~status] : bnc_msg use-nick 2
-  .-
   .$style_proxy running status : /bnc_msg status
   &connect irc
   .with proxy 
@@ -203,12 +199,9 @@ alias bool_using_proxy {
 alias style_proxy {
   if (!$varname_cid(trio-ircproxy.py,active).value) { return $style(2) }
 }
-on *:text:*:?status: {
-  if (!$is_status_nick) { return }
+on *:text:*:~status: {
   tokenize 32 $strip($1-)
-  if (status-nick == $1) { set $varname_glob(status-nick,none) $nick }
-  if (!$is_status) { return }
-  if ($1- == Trio-ircproxy.py active/running for this connection) { set $varname_cid(trio-ircproxy.py, active) $true }
+  if ($1- == Trio-ircproxy.py active for this connection) { set $varname_cid(trio-ircproxy.py, active) $true }
   if ($1- == you are logged-in as Administrator) { set $varname_cid(trio-ircproxy.py, admin) $true }
   if ($4 != $null) && (*your username is ??* iswm $1-4) { set $varname_cid(trio-ircproxy.py, is_user) $4 }
   if ($1 == admin-nick) { set $varname_glob(admin-nick,none) $$2 }
@@ -217,22 +210,10 @@ on *:text:*:?status: {
   if ($1 == admin-smtp-server-name) { set $varname_glob(admin-server-name,none) $$2 }
   if ($1 == admin-smtp-user) { set $varname_glob(admin-smtp-user,none) $$2 }
   if ($1 == admin-smtp-password) { set $varname_glob(admin-smtp-password,none) $$2 }
-  if (status-history-freeze-everywhere == $1) && ($2 isin $true$false) { set $varname_glob(status-history-freeze,everywhere) $$2 }
-  if (status-history-freeze == $1) && (#* iswm $2) { set $varname_glob(status-history-freeze,$2) $$3 }
-  if (status-history-clear == $1) && ($3 isin $true$false) { set $varname_glob(status-history-clear,$2) $$3 }
-  if (status-history-clear-everywhere == $1) && ($2 isin $true$false) { set $varname_glob(status-history-clear,everywhere) $$2 }
   if (say-away == $1) && ($2 isin $true$false) { set $varname_glob(say-away,none) $2 }
   if (operscan-join == $1) && ($2 isin $true$false) { set $varname_glob(operscan-join,none) $2 }
   if ($1 == use-ports) { set $varname_global(use-port,proxy) $2 | set $varname_global(use-port,http) $3 }
-  if ($1 == identify-chanserv) {
-    var %i = 2
-    var %chan = $ [ $+ [ %i ] ]
-    while (%chan) {
-      set $varname_global(identify-chanserv,$+(%chan,-,$$network)) %chan
-      inc %i
-      var %chan = $ [ $+ [ %i ] ]
-    }
-  }
+  if ($1 == identify-chanserv) { set $varname_global(identify-chanserv,$network) $true }
   if ($1 == identify-nick) { return }
 }
 alias -l popup-identify-founder-list {
@@ -251,18 +232,8 @@ alias is_status_nick {
 
   if ($1) { var %nick = $1 }
   elseif ($nick != $null) { var %nick = $nick }
-  if ($chr(42) $+ status != %nick) && (~status != %nick) { return $false }
+  if (~status != %nick) { return $false }
   return $true
-}
-alias is_status {
-  ; Checks if active nick == satus-nick
-  ;;
-
-  if ($1 != $null) { var %nick = $1 }
-  elseif ($nick != $null) { var %nick = $nick }
-  else { return $false }
-  if ($varname_glob(status-nick,none).value == %nick) { return $true }
-  else { return $false }
 }
 menu menubar {
   $iif((!$var(%bde_glob_*history*,0)),$style(2)) erase history : unset %bde_glob_*history* | eecho you have erased your history.

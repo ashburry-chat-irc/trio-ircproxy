@@ -81,7 +81,6 @@ def create_database(app):
 
 def begin_flask():
     try:
-        from threading import Thread
         from twisted.internet import reactor
         from twisted.web.server import Site
         from twisted.web.wsgi import WSGIResource
@@ -92,14 +91,14 @@ def begin_flask():
         # compatable production server.
         flask_site = WSGIResource(reactor, reactor.getThreadPool(), app)
         reactor.listenTCP(i_port, Site(flask_site), 65535, n_host)
-        print(f"-+\nAttempting to open flask_app.py with port {str(i_port)}\n-+")
+        print(f"-+\nOpening flask_app.py on port number {str(i_port)} on hostname {n_host}\n-+")
         reactor.run()
         #app.run(n_host, i_port, debug=True)
     except CannotListenError:
-        print("\nERROR: Unable to listen on flask web-server listening port " + str(i_port))
+        print("\nERROR: Unable to listen on flask web-server port number " + str(i_port) + '.')
         print("flask_app.py must be already running somewhere,")
         print("or the listening port is in use by some other app.")
-        print(f"Or, you do not have privileged access to listen on this port ({str(i_port)})")
+        print(f"Or, if you are using Linux, you may not have privileged access to listen on the port ({str(i_port)}).")
     except RNR_Error:
         pass
 
