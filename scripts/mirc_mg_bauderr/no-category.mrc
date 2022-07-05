@@ -1,22 +1,12 @@
 on *:start: {
-  set $varname_cid(status-name) $+($r(a,z),$r(a,z),$r(a,z),$r(a,z),$r(a,z),$r(a,z),$r(a,z))
-}
-on *:active:*: {
-  if (!$varname_cid(status-name).value) {
-    set $varname_cid(status-name) $+($r(a,z),$r(a,z),$r(a,z),$r(a,z),$r(a,z),$r(a,z),$r(a,z))
-  }
-}
-
-on *:start: {
   bde_start
 }
 alias bde_start {
   !.menubar on
   !.treebar on
-  if ($vol(master) > 32767) { !.vol -u2v 32767 }
-  if ($vol(master) < 9880) { !.vol -u2v 9880 }
   dcc maxcps $calc(1024 * 1024 * 12)
   .speak -lu Welcome
+  unset %bde_cid_*
 }
 alias qw {
   var %text = $1

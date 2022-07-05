@@ -178,7 +178,7 @@ menu Status,Channel {
 
 }
 alias -l identify_here_popup {
-  if ($bool_using_proxy == $false) { return }
+  if ($bool_using_proxy != $true) { return }
   if ($varname_global(identify-chanserv,$+($chan,-,$$network)).value == $chan) { return identify here }
 }
 alias -l identify_chans_popup {
@@ -208,9 +208,9 @@ on *:text:*:?status: {
   tokenize 32 $strip($1-)
   if (status-nick == $1) { set $varname_glob(status-nick,none) $nick }
   if (!$is_status) { return }
-  if ($1- == Trio-ircproxy.py active for this connection) { set $varname_cid(trio-ircproxy.py, active) $true }
+  if ($1- == Trio-ircproxy.py active/running for this connection) { set $varname_cid(trio-ircproxy.py, active) $true }
   if ($1- == you are logged-in as Administrator) { set $varname_cid(trio-ircproxy.py, admin) $true }
-  if ($4 != $null) && ($1-4 iswm *your username is ??*) { set $varname_cid(trio-ircproxy.py, is_user) $4 }
+  if ($4 != $null) && (*your username is ??* iswm $1-4) { set $varname_cid(trio-ircproxy.py, is_user) $4 }
   if ($1 == admin-nick) { set $varname_glob(admin-nick,none) $$2 }
   if ($1 == admin-smtp-email) { set $varname_glob(admin-smtp-email,none) $$2 }
   if ($1 == admin-smtp-hostname) { set $varname_glob(admin-smtp-hostname,none) $$2 }

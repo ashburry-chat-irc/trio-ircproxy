@@ -28,14 +28,17 @@ def admin_create():
     else:
         return redirect(url_for('auth.not_admin'))
     if request.method == 'POST':
-        email = request.form.get('email').lower()
-        password1 = request.form.get('password1')
-        password2 = request.form.get('password2')
+        email: str = request.form.get('email').lower()
+        password1: str = request.form.get('password1')
+        password2: str = request.form.get('password2')
+        # tricky `if / else`+ ahead
+        if len(email) < 4:
+            flash('Email is too short, must be longer than 3 characters.')
         if password1 != password2 or not password1 or not password2:
             flash('Passwords do not match.', category='error')
-        elif not email and len(email) < 4:
+        elif not email:
             flash('Email is too short, must be longer than 3 characters.')
-        elif ('@' not in email):
+        if ('@' not in email):
             flash('That is not an email address.', category='error')
         else:
             ip = request.environ['REMOTE_ADDR']
@@ -64,6 +67,9 @@ def admin_create():
 @auth.route('/admin/bnc-settings.htm', methods=['GET', 'HEAD', 'POST'])
 @auth.route('/admin/bnc-settings.py', methods=['GET', 'HEAD', 'POST'])
 @auth.route('/admin/bnc-settings.html', methods=['GET', 'HEAD', 'POST'])
+@auth.route('/admin/bnc-settings/', methods=['GET', 'HEAD', 'POST'])
+@auth.route('/admin/bncsettings/', methods=['GET', 'HEAD', 'POST'])
+@auth.route('/bnc/settings', methods=['GET', 'HEAD', 'POST'])
 def settings():
     if current_user.is_authenticated:
         resp = make_response(render_template('settings.html', user=current_user), 200)
@@ -75,7 +81,7 @@ def settings():
 @auth.route('/admin/post/home-data.py', methods=['GET', 'POST'])
 def home_data():
     if request.method != 'POST':
-        flash('this is not an web-page with content. url is only for POSTing only!', category='error')
+        flash('Redirected to the home page.', category='error')
         return redirect(url_for('views.home'))
     if hasattr(current_user, 'user_name') and current_user.user_name != 'admin':
         flash('you MUST log-in as the Admin to post to this URL.', category='error')
@@ -138,6 +144,7 @@ def home_data():
     encrypt_home()
     flash("basic server information is saved.", category="success")
     return redirect(url_for('auth.admin_settings'))
+
 
 @auth.route('/admin-settings/', methods=['GET', 'POST', 'HEAD'])
 @auth.route('/admin/admin-settings.htm', methods=['GET', 'POST', 'HEAD'])
@@ -442,14 +449,14 @@ def sign_up():
         del flood
         del count
         del now
-        email = request.form.get('email').lower()
-        user_name = request.form.get('userName').lower()
-        password1 = request.form.get('password1')
-        password2 = request.form.get('password2')
+        email: str = request.form.get('email').lower()
+        user_name: str = request.form.get('userName').lower()
+        password1: str = request.form.get('password1')
+        password2: str = request.form.get('password2')
 
-        user_email = User.query.filter_by(email=email)
-        used_username = User.query.filter_by(user_name=user_name).first()
-        user_ip = User.query.filter_by(ip=ip)
+        user_email: User = User.query.filter_by(email=email)
+        used_username: User = User.query.filter_by(user_name=user_name).first()
+        user_ip: User = User.query.filter_by(ip=ip)
 
         if user_email.count() > 5:
             flash('email already has the maximum of accounts allowed.', category='error')
@@ -486,4 +493,3 @@ def sign_up():
     resp = make_response(render_template("sign_up.html", user=current_user))
     no_cache(resp)
     return resp
-0

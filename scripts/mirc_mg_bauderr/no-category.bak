@@ -1,22 +1,12 @@
 on *:start: {
-  set $varname_cid(status-name) $+($r(a,z),$r(a,z),$r(a,z),$r(a,z),$r(a,z),$r(a,z),$r(a,z))
-}
-on *:active:*: {
-  if (!$varname_cid(status-name).value) {
-    set $varname_cid(status-name) $+($r(a,z),$r(a,z),$r(a,z),$r(a,z),$r(a,z),$r(a,z),$r(a,z))
-  }
-}
-
-on *:start: {
   bde_start
 }
 alias bde_start {
   !.menubar on
   !.treebar on
-  if ($vol(master) > 32767) { !.vol -u2v 32767 }
-  if ($vol(master) < 9880) { !.vol -u2v 9880 }
   dcc maxcps $calc(1024 * 1024 * 12)
   .speak -lu Welcome
+  unset %bde_cid_*
 }
 alias qw {
   var %text = $1
@@ -102,6 +92,10 @@ alias script_info {
     aline -p @script_info -
   }
   elseif ($1 == -port) {
+    titlebar @script_info - listen ip information
+    aline @script_info 54,93Listen Port
+    aline 52 @script_info - All connections on the internet are to an IP address on an specific port number. In this case it is the IP of the machine running the Trio-IrcProxy.py and the port number that Trio-IrcProxy.py is listening on. On Windows any port number is okay. On Linux only the ports between 1024 and 5000 are usable to an normal-priviledged user. If you wish to use port 80 on Linux you must run the flask_app.py with sudo.
+    aline -p @script_info - 
 
   }
 
